@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Lun 27 Octobre 2014 à 18:02
+-- Généré le : Lun 27 Octobre 2014 à 18:54
 -- Version du serveur: 5.0.75
 -- Version de PHP: 5.2.6-3ubuntu4.6
 
@@ -16,8 +16,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `nyvon`
+-- Base de données: `dyfscrum`
 --
+
+CREATE DATABASE dyfscrum;
+
+USE dyfscrum;
 
 -- --------------------------------------------------------
 
@@ -124,6 +128,23 @@ CREATE TABLE IF NOT EXISTS `ETAT` (
 
 --
 -- Contenu de la table `ETAT`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `KANBAN`
+--
+
+CREATE TABLE IF NOT EXISTS `KANBAN` (
+  `ID_TACHE` int(11) NOT NULL,
+  `ID_UTILISATEUR` int(11) NOT NULL,
+  PRIMARY KEY  (`ID_TACHE`,`ID_UTILISATEUR`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `KANBAN`
 --
 
 
