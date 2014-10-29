@@ -14,24 +14,24 @@
 
 		$query = "INSERT INTO UTILISATEUR ( NOM, PRENOM, MAIL, PSEUDO, MOT_DE_PASSE) VALUES ('".$nom."','".$prenom."','".$mail."','".$login."',MD5('".$mdp."'))";
 		if( $conn->query($query) == FALSE)
-			echo "Impossible de créer votre compte";
+			echo '<div class="alert alert-danger" role="alert">Impossible de créer votre compte.</div>';
 		else
 
 			
-			echo "<legend>Inscription</legend>
-			Création de votre compte réussi.</br>Vous allez être redirigé vers l'accueil.";
+			echo '<legend>Inscription</legend>
+			<div class="alert alert-success" role="alert">Création de votre compte réussi. Vous pouvez désormez vous connectez.</div>';
 		?>
 			<script type="text/javascript">
 			<!--
 				var obj = 'window.location.replace("index.php");';
-				setTimeout(obj,3000);
+				setTimeout(obj,5000);
 			// -->
 			</script>
 		<?php
 		
 	}
 	else
-		echo "Champs obligatoires non remplis";
+		echo '<div class="alert alert-danger" role="alert">Champs obligatoires non remplis</div>';
 		
 	mysql_close($link);
 ?> 	
