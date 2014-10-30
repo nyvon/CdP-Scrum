@@ -24,7 +24,7 @@
 			<script type="text/javascript">
 			<!--
 				var obj = 'window.location.replace("index.php");';
-				setTimeout(obj,5000);
+				setTimeout(obj,3000);
 			// -->
 			</script>
 		<?php

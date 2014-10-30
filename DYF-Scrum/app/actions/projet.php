@@ -1,6 +1,6 @@
 <?php
 	echo "les Projets";
-	include"bd_conn.php";
+	include"bd-connexion.php";
 
 	$query = "SELECT * FROM  projet";
 	if( $conn->query($query) == TRUE)
