@@ -16,10 +16,13 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `nyvon`
+-- Base de données: `dyfscrum`
 --
 
 -- --------------------------------------------------------
+
+CREATE DATABASE dyfscrum;
+USE dyfscrum;
 
 --
 -- Structure de la table `ASSOCIER`
@@ -215,6 +218,12 @@ CREATE TABLE IF NOT EXISTS `ROLE` (
 --
 -- Contenu de la table `ROLE`
 --
+
+INSERT INTO `ROLE` (`NOM`) VALUES
+('Développeur'),
+('Product Owner'),
+('Scrum Master');
+
 
 
 -- --------------------------------------------------------
