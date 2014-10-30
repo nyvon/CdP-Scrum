@@ -1,0 +1,69 @@
+
+    <h1>Gestion des collaborateurs du projet</h1>
+    <legend>Collaborateurs du projet</legend>
+
+      <?
+      $id_projet = $_GET['id_projet'];
+      $result = $conn->query("SELECT UTILISATEUR.ID, UTILISATEUR.NOM NOM1, UTILISATEUR.PRENOM, UTILISATEUR.MAIL, UTILISATEUR.PSEUDO, ROLE.NOM NOM2 FROM UTILISATEUR JOIN PARTICIPER ON PARTICIPER.ID_UTILISATEUR = UTILISATEUR.ID JOIN ROLE ON ROLE.ID = PARTICIPER.ID_ROLE WHERE PARTICIPER.ID_PROJET = ".$id_projet);
+      echo '<table class="table table-hover table-striped"><thead>';
+      echo '<tr><th>Login</th><th>Prénom</th><th>Nom</th><th>Mail</th><th>Rôle</th></tr></thead><tbody>';
+      if($result->num_rows > 0){
+        
+        while($row = $result->fetch_assoc()) {
+          echo '<tr><td>'.utf8_encode($row["PSEUDO"]).'</td><td>'.utf8_encode($row["PRENOM"]).'</td><td>'.utf8_encode($row["NOM1"]).'</td><td><a href="mailto:'.$row["MAIL"].'">'.$row["MAIL"].'</a></td><td>'.utf8_encode($row["NOM2"]).'</td></tr>';
+        }
+      }
+      echo '</tbody></table>';
+      ?>
+  
+
+<legend>Ajout de collaborateur au projet</legend>
+
+<?
+echo '<form class="form-search" name="ajout-utilisateur" method="post" action="index.php?action=verif-ajoututilisateur&id_projet='.$id_projet.'" onSubmit="return verifFormulaire()">';
+?>
+<fieldset>
+
+    <p>Entrez le nom de l'utilisateur que vous souhaitez ajouter.</p>
+    <input id="login" name="login" placeholder="Login de l'utilisateur" list="menuItems" class="input-xlarge" required="" type="text" autocomplete="off">
+    <?
+  
+  // Verification de la disponibilité du login
+  $result = $conn->query("SELECT ID, PSEUDO, NOM, PRENOM FROM UTILISATEUR WHERE PSEUDO LIKE '".$_GET["pseudo"]."%' LIMIT 0,10 ");
+  if ($result->num_rows > 0) {
+    // output data of each row
+    echo '<datalist id = "menuItems">';
+      while($row = $result->fetch_assoc()) {
+          echo '<option value = "' . utf8_encode($row["PSEUDO"]). '"><b>'.utf8_encode($row["PSEUDO"]).'</b> '.utf8_encode($row["PRENOM"]).' '. utf8_encode($row["NOM"]).'</option>';
+      }
+      echo '</datalist>';
+} 
+
+?>
+    <? 
+   
+
+  
+    $result = $conn->query("SELECT ID, NOM FROM ROLE");
+    if ($result->num_rows > 0) {
+    // output data of each row
+    echo "<select name='role'>";
+      while($row = $result->fetch_assoc()) {
+        if($row["ID"] == 1)
+          echo '<option value = "' . $row["ID"]. '">D&eacute;veloppeur</option>';
+        else
+          echo '<option value = "' . $row["ID"]. '">'.utf8_encode($row["NOM"]).'</option>';
+      }
+      echo "</select>";
+} 
+    ?>
+    <button type="submit" id="submit" name="submit" class="btn btn-primary"><b>+</b> Ajouter</button><div id="pseudobox"></div>
+   
+
+
+</fieldset>
+</form>
+
+
+
+
