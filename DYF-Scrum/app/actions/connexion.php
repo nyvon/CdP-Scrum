@@ -1,30 +1,42 @@
 <?php
-$host ="localhost";
-$user ="root";
-$bdd ="bd";                         //à conformiser avec la vraie base apres
-$pwd1  ="";
-$base= mysqli_connect($host, $user,$pwd1, $bdd); 
+include "bd-connexion.php";
 $pseudo = $_POST['pseudo'];
 $mdp = $_POST['pwd'];
 
   if(isset($_POST) && !empty($_POST['pseudo']) && !empty($_POST['pwd'])) {
   extract($_POST);  
-  $sql = "select mot_de_passe from utilisateur where pseudo='".$pseudo."'";
-  $req = mysqli_query($base,$sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
+  $sql = "select id from utilisateur where pseudo='".$pseudo."' AND mot_de_passe=MD5('".$mdp."')";
+  $req = mysqli_query($conn,$sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
 	$data = mysqli_fetch_assoc($req);
-  if($data['mot_de_passe'] != $mdp) {   
-    Atomik::redirect('loggin.php');
-    exit;
+  if(!$req->num_rows>=1) { 
+        echo '<legend>Inscription</legend>';
+          echo '<div class="alert alert-danger" role="alert">Login incorrect. Redirection en cours...</div>';
+?>
+      <script type="text/javascript">
+      <!--
+        var obj = 'window.location.replace("index.php?action=login");';
+        setTimeout(obj,3000);
+      // -->
+      </script>
+<?php           
   }
   else {
-  	if(!isset($_SESSION))
-  	{  
+   
   		session_start();
-   		 $_SESSION['pseudo'] = $pseudo;  
-   		  printf("Vous etes bien logué");     	
-    	      
+        $_SESSION['id'] = $data['id'];  
+   		 $_SESSION['pseudo'] = $pseudo; 
+        $_SESSION['islogged'] = true;
+
+   		 echo '<div class="alert alert-success" role="alert">Vous êtes maintenant connecté. Redirection en cours...</div>';
+    ?>
+      <script type="text/javascript">
+      <!--
+        var obj = 'window.location.replace("index.php");';
+        setTimeout(obj,3000);
+      // -->
+      </script>
+<?php           
 	}
-  echo '<a href="index.php?action=projet">voir les projets</a>';
-  }     
+       
 }
 ?>
