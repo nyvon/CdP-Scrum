@@ -5,7 +5,7 @@ $mdp = $_POST['pwd'];
 
   if(isset($_POST) && !empty($_POST['pseudo']) && !empty($_POST['pwd'])) {
   extract($_POST);  
-  $sql = "select id from utilisateur where pseudo='".$pseudo."' AND mot_de_passe=MD5('".$mdp."')";
+  $sql = "select id from utilisateur where pseudo='".$pseudo."' AND mot_de_passe=MD5('".$mdp."')";  //
   $req = mysqli_query($conn,$sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
 	$data = mysqli_fetch_assoc($req);
   if(!$req->num_rows>=1) { 
@@ -22,7 +22,7 @@ $mdp = $_POST['pwd'];
   }
   else {
    
-  		session_start();
+  	//	session_start();
         $_SESSION['id'] = $data['id'];  
    		 $_SESSION['pseudo'] = $pseudo; 
         $_SESSION['islogged'] = true;
