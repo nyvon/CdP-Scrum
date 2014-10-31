@@ -3,9 +3,9 @@
 <p>
 DYF Scrum Manager vous permet d'organiser vos projets en utilisant la méthode Scrum. Pour ce faire, vous devez créer un compte, vous connectez puis créer un projet. Libre à vous ensuite d'utiliser les outils que nous vous fournissons.
 </p>
-<?  if(isset($_SESSION['islogged']) && $_SESSION['islogged'] == true){
-		echo '<p><a class="btn btn-large btn-primary" href="index.php?action=creerprojet">Créer un projet &raquo;</a></p>';
-		echo '<p><a class="btn btn-large btn-success" href="index.php?action=projet">Afficher mes projets &raquo;</a></p>';
+<?php  if(isset($_SESSION['islogged']) && $_SESSION['islogged'] == true){
+		echo '<p><a class="btn btn-large btn-primary" href="index.php?action=projet">Créer un projet &raquo;</a></p>';
+		echo '<p><a class="btn btn-large btn-success" href="index.php?action=affiche_projet">Afficher mes projets &raquo;</a></p>';
 
 }
 	
