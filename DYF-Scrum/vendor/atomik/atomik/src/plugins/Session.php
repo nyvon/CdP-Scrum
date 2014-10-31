@@ -39,7 +39,7 @@ class Session
     public static function onAtomikStart()
     {
         if (self::$config['autostart']) {
-           // session_start();
+             session_start();
             if (($ns = self::$config['namespace']) !== false) {
                 if (!isset($_SESSION[$ns])) {
                     $_SESSION[$ns] = array();
