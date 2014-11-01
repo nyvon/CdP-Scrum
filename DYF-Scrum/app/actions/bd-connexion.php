@@ -2,8 +2,8 @@
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "root";
-	$db = "dyfscrum";
+	$password = "";
+	$db = "dyfscrum";  
 	$conn = new mysqli($servername, $username, $password, $db);
 
 	// Check connection

@@ -1,7 +1,6 @@
 <?php
 
 	include "bd-connexion.php";
-
 	
 	$nom = $_REQUEST["nom"];
 	$prenom = $_REQUEST["prenom"];
@@ -33,5 +32,5 @@
 	else
 		echo '<div class="alert alert-danger" role="alert">Champs obligatoires non remplis</div>';
 		
-	mysql_close($link);
+	$conn->close();
 ?> 	
