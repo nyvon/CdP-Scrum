@@ -29,7 +29,7 @@
 		<div class="control-group">
 			<label class="control-label" for="role">Votre rôle</label>
 			<div class="controls">
-			<? 
+			<?php
 			   
 			    $result = $conn->query("SELECT ID, NOM FROM ROLE");
 			    if ($result->num_rows > 0) {
