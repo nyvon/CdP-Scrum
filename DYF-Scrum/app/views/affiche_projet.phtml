@@ -25,10 +25,9 @@
 			 <tbody> 
           <tr class="success"> 
           	<td>
-              <? 
+              <?php
 
-              echo '<a href="index.php?action=affiche_projet_num&id_projet='.$row['ID'].'">';
-              echo $row['NOM']."</a></td> "; ?>
+              echo '<a href="index.php?action=affiche_projet_num&id_projet='.$row['ID'].'">'.$row['NOM']."</a></td>";?>
           <td><?php echo $row['DESCRIPTION']; ?></td>  
           <td><?php echo $row['LIEN_GIT']; ?></td> 
           <td><?php echo $row['ID']; ?></td>
