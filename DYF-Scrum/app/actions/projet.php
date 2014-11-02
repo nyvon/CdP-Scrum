@@ -1,0 +1,2 @@
+<?
+   include 'bd-connexion.php';
