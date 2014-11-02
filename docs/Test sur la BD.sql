@@ -246,10 +246,12 @@ VALUES
 -- Test sur la table
 --
 
-INSERT INTO `ROLE` (`ID`, `NOM`) VALUES
-(1, 'Développeur'),
-(2, 'Product Owner'),
-(3, 'Scrum Master');
+-- INSERT INTO `ROLE` (`ID`, `NOM`) VALUES
+-- (1, 'Développeur'),
+-- (2, 'Product Owner'),
+-- (3, 'Scrum Master');
+
+-- Données de base dans la BD
 
 -- --------------------------------------------------------
 
@@ -374,6 +376,6 @@ User Story','de générer un backlog',3,1,1);
 INSERT INTO UTILISATEUR
 (NOM,PRENOM,MAIL,PSEUDO,MOT_DE_PASSE) 
 VALUES
-('Yvon','Nicolas','nicolasyvon@gmail.com','nyvon',MD5('1234'),
+('Yvon','Nicolas','nicolasyvon@gmail.com','nyvon',MD5('1234')),
 ('Dossot','Sébastien','sebastiendossot@gmail.com','sdossot',MD5('5678')),
-('Fane','Boubacar','boubacarfane@gmail.com','bfane',MD5('9012');
+('Fane','Boubacar','boubacarfane@gmail.com','bfane',MD5('9012'));
