@@ -26,8 +26,27 @@
 				<p class="help-block">Insérez le lien vers le git du projet.</p>
 			</div>
 		</div>
-
-
+		<div class="control-group">
+			<label class="control-label" for="role">Votre rôle</label>
+			<div class="controls">
+			<? 
+			   
+			    $result = $conn->query("SELECT ID, NOM FROM ROLE");
+			    if ($result->num_rows > 0) {
+			    // output data of each row
+			    echo "<select name='role'>";
+			      while($row = $result->fetch_assoc()) {
+			        if($row["ID"] == 1)
+			          echo '<option value = "' . $row["ID"]. '">D&eacute;veloppeur</option>';
+			        else
+			          echo '<option value = "' . $row["ID"]. '">'.utf8_encode($row["NOM"]).'</option>';
+			      }
+			      echo "</select>";
+				}	 
+			    ?>
+			<p class="help-block">Choisissez votre rôle dans le projet.</p>
+			</div>
+		</div>
 		<!-- Button (Double) -->
 		<div class="control-group">
 			<label class="control-label" for="return"></label>
