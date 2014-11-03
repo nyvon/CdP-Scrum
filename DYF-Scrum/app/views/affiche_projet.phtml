@@ -1,0 +1,44 @@
+
+	<?php
+	if( $result == TRUE){
+		$num=mysqli_num_rows($result);
+	?>      
+ <div class="page-header"><h3>Liste de(s) projet(s)  sur le(s)quel(s) travaille  <small><?php echo $pseudo; ?></small></h3></div>
+		<div class="container">     
+    		<div class="row"> 
+    		<div class="col-xs-12 col-sm-10 col-md-6"> 
+       	    <table class="table table-bordered table-striped table-hover"> 
+               
+          <thead> 
+          <tr> 
+          <td>NOM PROJET</td> 
+          <td>DESCRIPTION PROJET</td> 
+          <td>EMPLACEMENT DU DEPOT</td> 
+          <td>ID</td>
+          </tr> 
+          </thead> 
+		
+		<?php
+		while($row = $result->fetch_assoc()){
+
+			?>
+			 <tbody> 
+          <tr class="success"> 
+          	<td>
+              <?php
+
+              echo '<a href="index.php?action=affiche_projet_num&id_projet='.$row['ID'].'">'.$row['NOM']."</a></td>";?>
+          <td><?php echo utf8_encode($row['DESCRIPTION']); ?></td>  
+          <td><?php echo $row['LIEN_GIT']; ?></td> 
+          <td><?php echo $row['ID']; ?></td>
+          </tr>            	
+	     
+        <?php
+     }
+
+		}
+	else{
+		echo "There are any error(s) with this request"; 		
+	}	
+	
+?>

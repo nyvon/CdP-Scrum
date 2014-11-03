@@ -1,0 +1,51 @@
+<?php $lien = "index.php?action=verif_form_us&id_projet=".$id_projet;
+echo '<form class="form-horizontal" name="user_story" method="post" action='.$lien.'>';
+
+?>
+	<fieldset>
+				<legend>Créer une User Story</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_user">En tant que</label>
+			<div class="controls">
+				<input id="id_type" name="type_user" placeholder="Utilisateur" class="input-xlarge" required="" type="text">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="but">Je souhaite</label>
+			<div class="controls">
+				<input id="id_but" name="but" placeholder="le but" class="input-xlarge" required="" type="text">				
+			</div>
+		</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="benefice">Afin de</label>
+			<div class="controls">
+				<input id="id_benef" name="benefice" placeholder="Benefice" class="input-xlarge" required="" type="text">
+				
+		</div>
+        </div>
+		<div class="control-group">
+			<label class="control-label" for="cout">Coût</label>
+			<div class="controls">
+				<input id="id_coup" name="cout" placeholder="Le coût de cet US" class="input-xlarge" required="" type="text">
+				
+		</div>
+        </div>
+
+		<div class="control-group">
+			<label class="control-label" for="priorité">Priorité</label>
+			<div class="controls">
+				<input id="id_prio" name="priorite" placeholder="priorite" class="input-xlarge" required="" type="text">
+				
+		</div>
+         </div>	
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>

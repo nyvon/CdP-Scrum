@@ -1,34 +1,39 @@
 <div class="hero-unit">
-  <h1>Bienvenue sur <strong>DYF Scrum Manager</strong></h1>
-  <p>
-    DYF Scrum Manager vous permet d'organiser vos projets en utilisant la méthode Scrum. Pour ce faire, vous devez créer un compte, vous connectez puis créer un projet. Libre à vous ensuite d'utiliser les outils que nous vous fournissons.
-  </p>
-  <p><a class="btn btn-large btn-primary" href="index.php?action=connexion">Connexion &raquo;</a></p>
+<h1>Bienvenue sur <strong>DYF Scrum Manager</strong></h1>
+<p>
+DYF Scrum Manager vous permet d'organiser vos projets en utilisant la méthode Scrum. Pour ce faire, vous devez créer un compte, vous connectez puis créer un projet. Libre à vous ensuite d'utiliser les outils que nous vous fournissons.
+</p>
+<?php  if(isset($_SESSION['islogged']) && $_SESSION['islogged'] == true){
+		echo '<p><a class="btn btn-large btn-primary" href="index.php?action=projet">Créer un projet &raquo;</a></p>';
+		echo '<p><a class="btn btn-large btn-success" href="index.php?action=affiche_projet">Afficher mes projets &raquo;</a></p>';
+
+}
+	
+	else
+		echo '<p><a class="btn btn-large btn-primary" href="index.php?action=login">Connexion &raquo;</a></p>';
+			
+?>
 </div>
-
 <div class="row">
-
-    <div class="span4">
-        <h2>Organiser un projet</h2>
-        <p>
-	Commencez par créer un projet après vous être connectés puis
-	utiliser les outils vous permettant <em>d'ajouter un utilisateur</em>,
-	ou bien <em>d'ajouter un rôle</em>.
-        </p>
-    </div>
-
-    <div class="span4">
-        <h2>Ajouter des User Story</h2>
-        <p>
-         Ajoutez maintenant des <em>User Story</em> afin d'y assigner des coûts et des priorités
-	 pour enfin créer des tâches associées à ces <em>User Story</em>.
-        </p>
-    </div>
-
-    <div class="span4">
-        <h2>Surveiller l'avancement</h2>
-        <p>
-         Utiliser les planning ainsi que les kanbans afin de prévoir le développement de votre projet. 
-        </p>
-    </div>
+<div class="span4">
+<h2>Organiser un projet</h2>
+<p>
+Commencez par créer un projet après vous être connectés puis
+utiliser les outils vous permettant <em>d'ajouter un utilisateur</em>,
+ou bien <em>d'ajouter un rôle</em>.
+</p>
+</div>
+<div class="span4">
+<h2>Ajouter des User Story</h2>
+<p>
+Ajoutez maintenant des <em>User Story</em> afin d'y assigner des coûts et des priorités
+pour enfin créer des tâches associées à ces <em>User Story</em>.
+</p>
+</div>
+<div class="span4">
+<h2>Surveiller l'avancement</h2>
+<p>
+Utiliser les planning ainsi que les kanbans afin de prévoir le développement de votre projet.
+</p>
+</div>
 </div>
