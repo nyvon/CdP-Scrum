@@ -32,7 +32,8 @@ include "bd-connexion.php";
 		?>
 			<script type="text/javascript">
 			<!--
-				var obj = 'window.location.replace("index.php");';
+				var id_projet = "<?php echo $id_projet; ?>";
+				var obj = 'window.location.replace("index.php?action=backlog&id_projet='+id_projet+'");';
 				setTimeout(obj,3000);
 			// -->
 			</script>
