@@ -1,15 +1,27 @@
 <ul class="nav nav-pills">
   <li class="active">
+<<<<<<< HEAD
     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+=======
+     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+>>>>>>> feature_sprint
   </li>
   <li>   
     <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
   </li>
   <li>
+<<<<<<< HEAD
    <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+=======
+   <?php echo '<a href="#?id_projet='.$id_projet.'">User Story</a>' ?>
+   </li>
+    <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">User Story</a>' ?>
+   </li>
+>>>>>>> feature_sprint
 </ul>
 
-<?
+<?php
   $result = $conn->query("SELECT * FROM PROJET WHERE PROJET.ID = ".$id_projet);
   $row = $result->fetch_assoc();
   echo "<h1>Projet ".$row["NOM"]."</h1>";
