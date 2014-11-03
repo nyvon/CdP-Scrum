@@ -25,18 +25,10 @@
 			 <tbody> 
           <tr class="success"> 
           	<td>
-<<<<<<< HEAD
-              <?php 
-
-              echo '<a href="index.php?action=affiche_projet_num&id_projet='.$row['ID'].'">';
-              echo $row['NOM']."</a></td> "; ?>
-          <td><?php echo utf8_encode($row['DESCRIPTION']); ?></td>  
-=======
               <?php
 
               echo '<a href="index.php?action=affiche_projet_num&id_projet='.$row['ID'].'">'.$row['NOM']."</a></td>";?>
-          <td><?php echo $row['DESCRIPTION']; ?></td>  
->>>>>>> feature_sprint
+          <td><?php echo utf8_encode($row['DESCRIPTION']); ?></td>  
           <td><?php echo $row['LIEN_GIT']; ?></td> 
           <td><?php echo $row['ID']; ?></td>
           </tr>            	
