@@ -1,6 +1,9 @@
-<form class="form-horizontal" name="user_story" method="post" action="index.php?action=verif_form_us">
+<?php $lien = "index.php?action=verif_form_us&id_projet=".$id_projet;
+echo '<form class="form-horizontal" name="user_story" method="post" action='.$lien.'>';
+
+?>
 	<fieldset>
-				<legend>Créer USER STORY</legend>		
+				<legend>Créer une User Story</legend>		
 		<div class="control-group">
 			<label class="control-label" for="type_user">En tant que</label>
 			<div class="controls">
@@ -23,15 +26,15 @@
 		</div>
         </div>
 		<div class="control-group">
-			<label class="control-label" for="coup">Valeur</label>
+			<label class="control-label" for="cout">Coût</label>
 			<div class="controls">
-				<input id="id_coup" name="coup" placeholder="Le coup de cet US" class="input-xlarge" required="" type="text">
+				<input id="id_coup" name="cout" placeholder="Le coût de cet US" class="input-xlarge" required="" type="text">
 				
 		</div>
         </div>
 
 		<div class="control-group">
-			<label class="control-label" for="priorité">Priorite</label>
+			<label class="control-label" for="priorité">Priorité</label>
 			<div class="controls">
 				<input id="id_prio" name="priorite" placeholder="priorite" class="input-xlarge" required="" type="text">
 				
