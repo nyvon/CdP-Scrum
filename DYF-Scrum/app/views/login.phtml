@@ -1,0 +1,29 @@
+ <form class="form-horizontal" id="connexion" name ="login" method="post" action="index.php?action=connexion">
+<fieldset>
+
+<!-- Inscription -->
+<legend>Connexion</legend>
+
+<div class="control-group">
+	<label class="control-label" for="login">Login</label>
+	<div class="controls">
+        <input type="text" class="form-control" placeholder="Login " required autofocus name ="pseudo" id="pseudo">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="login">Mot de passe</label>
+	<div class="controls">
+        <input type="password" class="form-control" placeholder="Mot de passe" required  name="pwd" id="pwd">
+	</div>
+</div>
+
+<div class="control-group">
+	<div class="controls">
+        <button class="btn btn-lg btn-primary" type="submit" name="send" value ="send">Connexion</button>
+        <span class="help-block">Vous n'avez pas de compte? <a href="index.php?action=inscription">Inscrivez vous!</a></span>
+	</div>
+</div>
+
+</fieldset>
+</form>    

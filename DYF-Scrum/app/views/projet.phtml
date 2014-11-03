@@ -1,0 +1,60 @@
+<form class="form-horizontal" name="projet" method="post" action="index.php?action=verif_projet">
+	<fieldset>
+		<!-- Créer Projet -->
+		<legend>Créer Projet</legend>
+		<!-- Text input-->
+		<div class="control-group">
+			<label class="control-label" for="nom">Nom</label>
+			<div class="controls">
+				<input id="nom" name="nom" placeholder="Nom" class="input-xlarge" required="" type="text">
+				<p class="help-block">Entrez le nom du projet.</p>
+			</div>
+		</div>
+		<!-- Text input-->
+		<div class="control-group">
+			<label class="control-label" for="description">Description</label>
+			<div class="controls">
+				<input id="description" name="description" placeholder="Description" class="input-xlarge" required="" type="text">
+				<p class="help-block">Entrez une descritpion de votre futur projet</p>
+			</div>
+		</div>
+		<!-- Text input-->
+		<div class="control-group">
+			<label class="control-label" for="liengit">Lien Git</label>
+			<div class="controls">
+				<input id="liengit" name="liengit" placeholder="Lien Git" class="input-xlarge" required="" type="text">
+				<p class="help-block">Insérez le lien vers le git du projet.</p>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="role">Votre rôle</label>
+			<div class="controls">
+
+			<?php
+			   
+			    $result = $conn->query("SELECT ID, NOM FROM ROLE");
+			    if ($result->num_rows > 0) {
+			    // output data of each row
+			    echo "<select name='role'>";
+			      while($row = $result->fetch_assoc()) {
+			        if($row["ID"] == 1)
+			          echo '<option value = "' . $row["ID"]. '">D&eacute;veloppeur</option>';
+			        else
+			          echo '<option value = "' . $row["ID"]. '">'.utf8_encode($row["NOM"]).'</option>';
+			      }
+			      echo "</select>";
+				}	 
+			    ?>
+			<p class="help-block">Choisissez votre rôle dans le projet.</p>
+			</div>
+		</div>
+		<!-- Button (Double) -->
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer le projet</button>
+			<button id="return" name="return" class="btn btn-default">Annuler</button>
+			</div>
+		</div>
+	</fieldset>
+</form>

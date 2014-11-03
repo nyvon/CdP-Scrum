@@ -1,0 +1,27 @@
+<ul class="nav nav-pills">
+  <li >
+     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li >   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li class="active">
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+	  <div class="span6">
+		<h2>Sprints</h2>
+		<?php $query ="SELECT * FROM sprint"; ?>
+	  </div>
+	  <div class="span6">
+		<h2>User Story</h2>
+		<?php $query = "SELECT * FROM user_story" ?>
+	  </div>
+	</div>
+</div>
