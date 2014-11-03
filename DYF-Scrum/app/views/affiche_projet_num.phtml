@@ -1,12 +1,12 @@
 <ul class="nav nav-pills">
   <li class="active">
-     <?php //echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
   </li>
   <li>   
-    <?php //echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
   </li>
   <li>
-   <?php //echo '<a href="#?id_projet='.$id_projet.'">User Story</a>' ?>
+   <?php echo '<a href="#?id_projet='.$id_projet.'">User Story</a>' ?>
    </li>
     <li>
    <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">User Story</a>' ?>
@@ -14,11 +14,11 @@
 </ul>
 
 <?php
-  /*$result = $conn->query("SELECT * FROM PROJET WHERE PROJET.ID = ".$id_projet);
+  $result = $conn->query("SELECT * FROM PROJET WHERE PROJET.ID = ".$id_projet);
   $row = $result->fetch_assoc();
   echo "<h1>Projet ".$row["NOM"]."</h1>";
   echo "<h2>Description</h2>";
   echo "<div class='well well-large'>".$row["DESCRIPTION"]."</div>";
   echo "<h2>Lien GIT</h2>    
-  <div class='alert alert-success'><a href=".$row["LIEN_GIT"].">".$row["LIEN_GIT"]."</a></div>";*/
+  <div class='alert alert-success'><a href=".$row["LIEN_GIT"].">".$row["LIEN_GIT"]."</a></div>";
 ?>
