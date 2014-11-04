@@ -1,12 +1,39 @@
 <div class="container-fluid">
-    <div class="row-fluid">
-	  <div class="span6">
-		<h2>Sprints</h2>
-		<?php $query ="SELECT * FROM sprint"; ?>
-	  </div>
 	  <div class="span6">
 		<h2>User Story</h2>
-		<?php $query = "SELECT * FROM user_story" ?>
-	  </div>
+		<?php $query = "SELECT USER_STORY.* FROM user_story JOIN backlog ON user_story.ID = backlog.ID_USER_STORY  WHERE  BACKLOG.ID_PROJET = ".$id_projet;
+		$result = $conn->query($query);
+		if($result == FALSE)
+			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+		else
+		{
+			echo '<div class="panel panel-default"><div class="panel-heading">Users Story</div>';
+			echo '<table class="table" align="center"><thead><tr><th>En tant que</th><th>Je souhaite </th><th>Afin de </th><th>Cout</th><th>Priorite</th><th>Associer</th></tr></thead><tbody>';
+			while($row = $result->fetch_assoc()) {
+				echo '<tr><td>'.$row["TYPE_UTILISATEUR"].'</td>';
+				echo '<td>'.$row["BUT"].'</td>';
+				echo '<td>'.$row["BENEFICE"].'</td>';
+				echo '<td>'.$row["COUT"].'</td>';
+				echo '<td>'.$row["PRIORITE"].'</td>';
+				echo '<td><div class="btn-group"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
+				echo 'Choisir sprint<span class="caret"></span></button>';
+				echo '<ul class="dropdown-menu" role="menu">';
+				$query2 = "SELECT SPRINT.ID FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+				$result2 = $conn->query($query2);
+				if ($result2 == FALSE)
+					echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+				else
+				{
+					$i=1;
+					while($row2 = $result2->fetch_assoc()) {
+						echo '<li><a href="index.php?action=ajout_user_story_sprint&id_sprint='.$row2["ID"].'&id_us='.$row["ID"].'&id_projet='.$id_projet.'">Sprint '.$i.'</a></li>';
+						$i++;
+					}
+				}
+				echo '</ul></td></tr>';
+			}
+			echo '</tbody></table></div>';
+		}
+		?>
 	</div>
 </div>

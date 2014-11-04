@@ -18,7 +18,7 @@
 
 			
 			echo '<legend>Inscription</legend>
-			<div class="alert alert-success" role="alert">Création de votre compte réussi. Vous pouvez désormez vous connectez.</div>';
+			<div class="alert alert-success" role="alert">Création de votre compte réussie. Vous pouvez désormais vous connecter.</div>';
 		?>
 			<script type="text/javascript">
 			<!--
