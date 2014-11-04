@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 	include"bd-connexion.php"; 	
     $id_projet = $_GET['id_projet'];
@@ -13,9 +12,3 @@
 	$result =$conn->query($query);
 
 	$conn->close();
-?>
-=======
-<?
-	include "bd-connexion.php";
-    $id_projet = $_GET['id_projet'];
->>>>>>> feature_sprint
