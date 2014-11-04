@@ -1,4 +1,5 @@
 <div class="container-fluid">
+<<<<<<< HEAD
 	  <div class="span6">
 		<h2>User Story</h2>
 		<?php $query = "SELECT USER_STORY.* FROM user_story JOIN backlog ON user_story.ID = backlog.ID_USER_STORY  WHERE  BACKLOG.ID_PROJET = ".$id_projet;
@@ -35,5 +36,16 @@
 			echo '</tbody></table></div>';
 		}
 		?>
+=======
+    <div class="row-fluid">
+	  <div class="span6">
+		<h2>Sprints</h2>
+		<?php $query ="SELECT * FROM sprint"; ?>
+	  </div>
+	  <div class="span6">
+		<h2>User Story</h2>
+		<?php $query = "SELECT * FROM user_story" ?>
+	  </div>
+>>>>>>> befcf1cdd5467e8f54fd4e1897fb05ead5f948e1
 	</div>
 </div>
