@@ -1,13 +1,18 @@
 <ul class="nav nav-pills">
-  <li >
-    <? echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
   </li>
   <li class="active">   
-    <? echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
   </li>
   <li>
-   <? echo '<a href="#?id_projet='.$id_projet.'">User Story</a>' ?>
-</ul>  
+    <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+   <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+ </li>
+</ul>
 
     <h1>Gestion des collaborateurs du projet</h1>
     <legend>Collaborateurs du projet</legend>
@@ -50,7 +55,7 @@ echo '<form class="form-search" name="ajout-utilisateur" method="post" action="i
 } 
 
 ?>
-    <? 
+    <?php 
    
     $result = $conn->query("SELECT ID, NOM FROM ROLE");
     if ($result->num_rows > 0) {

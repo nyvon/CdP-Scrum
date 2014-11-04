@@ -1,20 +1,36 @@
+<ul class="nav nav-pills">
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li>   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+  <li>
+    <li class="active">
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+   <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+ </li>
+</ul>
+
 <div class="container-fluid">
 	  <div class="span6">
-		<h2>User Story</h2>
+		<h2>User Story par sprint</h2>
 		<?php $query = "SELECT USER_STORY.* FROM user_story JOIN backlog ON user_story.ID = backlog.ID_USER_STORY  WHERE  BACKLOG.ID_PROJET = ".$id_projet;
 		$result = $conn->query($query);
 		if($result == FALSE)
 			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
 		else
 		{
-			echo '<div class="panel panel-default"><div class="panel-heading">Users Story</div>';
+			echo '<div class="panel panel-default">';
 			echo '<table class="table" align="center"><thead><tr><th>En tant que</th><th>Je souhaite </th><th>Afin de </th><th>Cout</th><th>Priorite</th><th>Associer</th></tr></thead><tbody>';
 			while($row = $result->fetch_assoc()) {
-				echo '<tr><td>'.$row["TYPE_UTILISATEUR"].'</td>';
-				echo '<td>'.$row["BUT"].'</td>';
-				echo '<td>'.$row["BENEFICE"].'</td>';
-				echo '<td>'.$row["COUT"].'</td>';
-				echo '<td>'.$row["PRIORITE"].'</td>';
+				echo '<tr><td>'.utf8_encode($row["TYPE_UTILISATEUR"]).'</td>';
+				echo '<td>'.utf8_encode($row["BUT"]).'</td>';
+				echo '<td>'.utf8_encode($row["BENEFICE"]).'</td>';
+				echo '<td>'.utf8_encode($row["COUT"]).'</td>';
+				echo '<td>'.utf8_encode($row["PRIORITE"]).'</td>';
 				echo '<td><div class="btn-group"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
 				echo 'Choisir sprint<span class="caret"></span></button>';
 				echo '<ul class="dropdown-menu" role="menu">';
