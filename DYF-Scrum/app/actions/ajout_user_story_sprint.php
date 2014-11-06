@@ -27,7 +27,7 @@
 			<script type="text/javascript">
              var id_projet = <?php echo $id_projet; ?>;
 			 var obj = 'window.location.replace("index.php?action=sprints&id_projet='+id_projet+'");';
-			 setTimeout(obj,3000);
+			 setTimeout(obj,1000);
 			 </script>
 			
 		<?php

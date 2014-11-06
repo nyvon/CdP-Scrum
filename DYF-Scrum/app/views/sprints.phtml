@@ -16,7 +16,34 @@
 
 <div class="container-fluid">
 	  <div class="span6">
+		<div class="btn-toolbar" style="margin: 0;">
+			<div class="btn-group">
+				<?php echo '<a class="btn btn-primary" href="index.php?action=ajouter_sprint&id_projet='.$id_projet.'">';?>
+					Ajouter sprint
+				</a>
+				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+					Modifier sprint
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<?php
+						$qry = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+						$r = $conn->query($qry);
+						if ($r == FALSE)
+							echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+						else
+						{
+							$i=1;
+							while($rw2 = $r->fetch_assoc()) {
+								echo '<li ><a href="index.php?action=modifier_sprint&id_sprint='.$rw2["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$rw2["DATE_DEB"].' au '.$rw2["DATE_FIN"].'</a></li>';
+								$i++;
+							}
+						}
+					?>
+				</ul>
+			</div>
 		<h2>User Story par sprint</h2>
+		
 		<?php $query = "SELECT USER_STORY.* FROM user_story JOIN backlog ON user_story.ID = backlog.ID_USER_STORY  WHERE  BACKLOG.ID_PROJET = ".$id_projet;
 		$result = $conn->query($query);
 		if($result == FALSE)
@@ -34,7 +61,7 @@
 				echo '<td><div class="btn-group"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
 				echo 'Choisir sprint<span class="caret"></span></button>';
 				echo '<ul class="dropdown-menu" role="menu">';
-				$query2 = "SELECT SPRINT.ID FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+				$query2 = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
 				$result2 = $conn->query($query2);
 				if ($result2 == FALSE)
 					echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
@@ -42,7 +69,7 @@
 				{
 					$i=1;
 					while($row2 = $result2->fetch_assoc()) {
-						echo '<li><a href="index.php?action=ajout_user_story_sprint&id_sprint='.$row2["ID"].'&id_us='.$row["ID"].'&id_projet='.$id_projet.'">Sprint '.$i.'</a></li>';
+						echo '<li><a href="index.php?action=ajout_user_story_sprint&id_sprint='.$row2["ID"].'&id_us='.$row["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$row2["DATE_DEB"].' au '.$row2["DATE_FIN"].'</a></li>';
 						$i++;
 					}
 				}
