@@ -2,7 +2,7 @@
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "root";
+	$password = "";
 	$db = "dyfscrum";  
 	$conn = new mysqli($servername, $username, $password, $db);
 
