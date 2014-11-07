@@ -1,3 +1,4 @@
+
 <ul class="nav nav-pills">
   <li>
     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
@@ -21,7 +22,9 @@
 				<?php echo '<a class="btn btn-primary" href="index.php?action=ajouter_sprint&id_projet='.$id_projet.'">';?>
 					Ajouter sprint
 				</a>
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
 					Modifier sprint
 					<span class="caret"></span>
 				</a>
@@ -42,9 +45,33 @@
 					?>
 				</ul>
 			</div>
+			<div class="btn-group">
+				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+					Supprimer sprint
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<?php
+						$q = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+						$rep = $conn->query($q);
+						if ($rep == FALSE)
+							echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+						else
+						{
+							$i=1;
+							while($rw3 = $rep->fetch_assoc()) {
+								echo '<li><a href="index.php?action=supprimer_sprint&id_sprint='.$rw3["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$rw3["DATE_DEB"].' au '.$rw3["DATE_FIN"].'</a></li>';
+								$i++;
+							}
+						}
+					?>
+				</ul>
+			</div>
+			</div>
 		<h2>User Story par sprint</h2>
 		
-		<?php $query = "SELECT USER_STORY.* FROM user_story JOIN backlog ON user_story.ID = backlog.ID_USER_STORY  WHERE  BACKLOG.ID_PROJET = ".$id_projet;
+		<?php 
+		$query = "SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON USER_STORY.ID = BACKLOG.ID_USER_STORY WHERE BACKLOG.ID_PROJET = ".$id_projet;
 		$result = $conn->query($query);
 		if($result == FALSE)
 			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
