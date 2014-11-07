@@ -60,7 +60,7 @@ if ($result0->num_rows > 0) {
         $result3 = $conn->query("SELECT TACHE.ID, TACHE.INTITULE FROM TACHE JOIN ETAT ON ETAT.ID = TACHE.ID_ETAT JOIN KANBAN ON TACHE.ID = KANBAN.ID_TACHE JOIN UTILISATEUR ON UTILISATEUR.ID = KANBAN.ID_UTILISATEUR JOIN ASSOCIER ON ASSOCIER.ID_TACHE = TACHE.ID JOIN USER_STORY ON USER_STORY.ID = ASSOCIER.ID_USER_STORY JOIN BACKLOG ON BACKLOG.ID_USER_STORY = USER_STORY.ID JOIN PROJET ON PROJET.ID = BACKLOG.ID_PROJET JOIN CONTENIR ON CONTENIR.ID_USER_STORY = USER_STORY.ID WHERE CONTENIR.ID_SPRINT = ".$row0['ID']." AND PROJET.ID = ".$id_projet." AND UTILISATEUR.ID = ".$row['ID']." AND TACHE.ID_ETAT = ".$row2['ID']);
         while($row3 = $result3->fetch_assoc()){
           echo "<tr><td>".$row3['INTITULE'];
-          if($row2['ID'] != 3){
+          if($row2['ID'] != 3 && $row['ID'] == $_SESSION['id']){
           echo '<a href="#myModal" role="button" class="btn btn-mini" data-toggle="modal">>></a>
  
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
