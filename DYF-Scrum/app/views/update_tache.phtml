@@ -1,0 +1,34 @@
+ 
+<form class="form-horizontal" name="user_story" method="post" action="index.php?action=update_action">
+	<fieldset>
+				<legend>Modifier une tache</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_tache">New Intitulé</label>
+			<div class="controls">
+				<input id="id_tache" name="intitule" placeholder="intitulé" class="input-xlarge" required="" type="text">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="desc"> New Description</label>
+			<div class="controls">
+				<input id="id_desc" name="desc" placeholder="Description" class="input-xlarge" required="" type="text">				
+			</div>
+			</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="cout"> New Cout</label>
+			<div class="controls">
+				<input id="id_cout" name="cout" placeholder="Cout de la tache (int)" class="input-xlarge" required="" type="text">
+			</div>
+		</div>
+		
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Modifier</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>

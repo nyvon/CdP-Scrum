@@ -1,0 +1,33 @@
+<form class="form-horizontal" name="user_story" method="post" action="index.php?action=ajout_tache">
+	<fieldset>
+				<legend>Créer une tache</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_tache">Intitulé</label>
+			<div class="controls">
+				<input id="id_tache" name="intitule" placeholder="intitulé" class="input-xlarge" required="" type="text">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="desc">Description</label>
+			<div class="controls">
+				<input id="id_desc" name="desc" placeholder="Description" class="input-xlarge" required="" type="text">				
+			</div>
+			</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="cout">Afin de</label>
+			<div class="controls">
+				<input id="id_cout" name="cout" placeholder="Cout de la tache" class="input-xlarge" required="" type="text">
+			</div>
+		</div>
+		
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer la tache</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>
