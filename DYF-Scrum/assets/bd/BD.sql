@@ -150,23 +150,6 @@ CREATE TABLE IF NOT EXISTS `KANBAN` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `LIER`
---
-
-CREATE TABLE IF NOT EXISTS `LIER` (
-  `ID_PROJET` int(11) NOT NULL,
-  `ID_SPRINT` int(11) NOT NULL,
-  PRIMARY KEY  (`ID_PROJET`,`ID_SPRINT`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `LIER`
---
-
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `PARTICIPER`
 --
 

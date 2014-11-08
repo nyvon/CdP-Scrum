@@ -159,28 +159,6 @@ VALUES
 (1,1),
 (2,2);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `LIER`
---
-
--- CREATE TABLE `LIER` (
---   `ID_PROJET` int(11) NOT NULL,
---   `ID_SPRINT` int(11) NOT NULL
--- ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
---
--- Test sur la table
---
-
-INSERT INTO LIER
-(ID_PROJET,ID_SPRINT)
-VALUES
-(1,1),
-(1,2);
 
 
 -- --------------------------------------------------------
