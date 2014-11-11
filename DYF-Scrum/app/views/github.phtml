@@ -1,0 +1,15 @@
+<?php 
+       $client = new \Github\Client();
+        $commits = $client->api('repo')->commits()->all('KnpLabs', 'php-github-api', array('sha' => 'master'));
+        $users = $client->api('user')->find('nyvon');
+ ?>
+
+ <h3> Test </h3>
+
+ <?php 
+
+	print_r($users);	
+ 	//foreach ($users as $key => $text){
+    //	echo $key.' + '.$text;
+//}
+ 	?>
