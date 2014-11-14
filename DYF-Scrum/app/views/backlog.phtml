@@ -18,10 +18,64 @@
  
 <h1>Backlog du projet</h1>
 
-<h2>User Story</h2>
-
 <?php echo '<p><a class="btn btn-large btn-primary" href="index.php?action=form_us&id_projet='.$id_projet.'">Créer une User Story &raquo;</a></p>'; ?>
-
 	
+<?php
+  if( $result == TRUE){
+    $num=mysqli_num_rows($result);
+  ?>      
+ <div class="page-header"><h3>Liste de(s) USER STORIES  <small><?php echo "du Backlog";?></small></h3></div>
+    <div class="container">     
+        <div class="row"> 
+        <div class="col-xs-12 col-sm-10 col-md-6"> 
+            <table class="table table-bordered table-striped table-hover"> 
+               
+          <thead> 
+          <tr> 
+          <td>TYPE UTILISATEUR</td> 
+          <td>BUT</td> 
+          <td>BENEFICE </td> 
+          <td>COUT</td>
+          <td>PRIORITE</td>
+          <td>ETAT</td>
+          </tr> 
+          </thead> 
+          <tfoot>
+    <tr>
+      <td><button type="button" class="btn btn-warning" data-toggle="button">Supprimer User Story</button>
+     <button type="button" class="btn btn-primary" data-toggle="button">Modifier User Story</button></td>    
+     
+    </tr>
+  </tfoot>
+      
+    <?php
+    while(($row = $result2->fetch_assoc())&&($row1 =$desc->fetch_assoc())){
 
+      ?>
+       <tbody> 
+          <tr class="success"> 
+          
+             
+          <td><?php echo $row['TYPE_UTILISATEUR']; ?></td>  
+          <td><?php echo $row['BUT']; ?></td> 
+          <td><?php echo $row['BENEFICE']; ?></td>
+          <td><?php echo $row['COUT']; ?></td>
+          <td><?php echo $row['PRIORITE']; ?></td>
+          <td><?php echo $row1['DESCRIPTION']; ?></td>
+          </tr>
 
+       
+        <?php
+
+     }
+
+    }
+
+  else{
+    echo "There are any error(s) with this request";    
+  } 
+ 
+//
+
+?>
+ 
