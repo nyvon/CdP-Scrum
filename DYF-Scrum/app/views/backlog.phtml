@@ -41,12 +41,13 @@
           </tr> 
           </thead> 
           <tfoot>
-    <tr>
-      <td><button type="button" class="btn btn-warning" data-toggle="button">Supprimer User Story</button>
-     <button type="button" class="btn btn-primary" data-toggle="button">Modifier User Story</button></td>    
-     
-    </tr>
-  </tfoot>
+            <tr>
+               <td>
+               <a href="#"><button type="button" class="btn btn-warning" data-toggle="button">Supprimer User Story</button></a>
+               <a href="#"><button type="button" class="btn btn-primary" data-toggle="button">Modifier User Story</button></a>
+               </td>
+            </tr>
+         </tfoot>
       
     <?php
     while(($row = $result2->fetch_assoc())&&($row1 =$desc->fetch_assoc())){
