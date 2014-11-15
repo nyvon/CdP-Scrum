@@ -1,15 +1,85 @@
 <?php 
-       $client = new \Github\Client();
-        $commits = $client->api('repo')->commits()->all('KnpLabs', 'php-github-api', array('sha' => 'master'));
-        $users = $client->api('user')->find('nyvon');
+ 
+$client = new \Github\Client(
+    new \Github\HttpClient\CachedHttpClient(array('cache_dir' => '/tmp/github-api-cache')));
+if(empty($_SESSION["project_id"]) || $_SESSION["project_id"] != $id_projet || empty($_SESSION["project_commit"]) || empty($_SESSION["project_infos"])){
+	$repos = $client->api('repo')->find($name);
+	$commits = $client->api('repo')->commits()->all($username, $name, array('sha' => 'master'));
+	$_SESSION["project_id"] = $id_projet;
+	$_SESSION["project_commit"] = $commits;
+	$_SESSION["project_infos"] = $repos;
+}
+else{
+	$commits = $_SESSION["project_commit"];
+	$repos = $_SESSION["project_infos"];
+}
  ?>
 
- <h3> Test </h3>
+ <ul class="nav nav-pills">
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li>   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li class="active">
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
+</ul>
 
+<h1>Github du projet</h1>
+
+
+<h2>Information général du dépôt <a href=<?php echo "'".$repos["repositories"][0]["url"]."'"; ?>> <?php echo $repos["repositories"][0]["username"]."/".$repos["repositories"][0]["name"]; ?></a></h2>
+<p class="lead">
+<em>Créé par l'utilisateur <?php echo "<a href='https://github.com/".$repos["repositories"][0]["owner"]."'>".$repos["repositories"][0]["owner"]."</a>"; ?></em> sur Github.
+</p>
+<h4>Description</h4>
+<div class="well">
+<?php
+	echo "<p>".$repos["repositories"][0]["description"]."</p>";
+?>
+</div>
+</p>
+
+
+<?php
+	if(!empty($repos["repositories"][0]["homepage"])){
+		echo "<h3>Page d'accueil</h3>";
+		echo $repos["repositories"][0]["homepage"];
+	}
+	?>
+
+<h2>Commits de la branche master</h2>
+<div class="container"> 
  <?php 
+ 	echo '<table class="table table-bordered">';
+ 	echo '<thead><th>Auteur</th><th>Message du commit</th></thead>';
+ 	echo '<tbody>';
+ 	foreach ($commits as $text){
+ 		echo "<tr>";
+ 		$y = substr ( $text["commit"]["committer"]["date"] , 0 ,4 );
+ 		$m = substr ( $text["commit"]["committer"]["date"] , 5 ,2 );
+ 		$d = substr ( $text["commit"]["committer"]["date"] , 8 ,2 );
+ 		$h = substr ( $text["commit"]["committer"]["date"] , 11 ,2 );
+ 		$min =substr ( $text["commit"]["committer"]["date"] , 14 ,2 );
+ 		$s =substr ( $text["commit"]["committer"]["date"] , 17 ,2 );
+ 		$date = "le ".$d."/".$m."/".$y." à ".$h.":".$min.":".$s." (UTC+1)";
+ 		echo "<td><img src='".$text["committer"]["avatar_url"]."' width='10%' height='10%'><a href='".$text["committer"]["html_url"]."'>".$text["committer"]["login"]."</a></img></br><em>".$date."</em></td>";
+ 		echo "<td><a href='".$text["html_url"]."'>".$text["commit"]["message"]."</a></td>";
+ 		echo "</tr>";
 
-	print_r($users);	
- 	//foreach ($users as $key => $text){
-    //	echo $key.' + '.$text;
-//}
+    }
+
+	echo '</tbody></table>';
  	?>
+ </div>
