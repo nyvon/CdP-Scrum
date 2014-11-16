@@ -1,3 +1,33 @@
+<?php   $id_projet = $_GET['id_projet'];
+?>
+
+<ul class="nav nav-pills">
+  <li >
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li >   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+    <li class="active">
+   <?php echo '<a href="index.php?action=form_tache&id_projet='.$id_projet.'">Add Tache</a>' ?>
+   </li>
+   <li>
+   <?php echo '<a href="index.php?action=supprime_tache&id_projet='.$id_projet.'">Del Tache</a>' ?>
+   </li>
+    <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+</ul>
+
 <form class="form-horizontal" name="user_story" method="post" action="index.php?action=ajout_tache">
 	<fieldset>
 				<legend>Créer une tache</legend>		
@@ -16,12 +46,31 @@
 			</div>	
 
 		<div class="control-group">
-			<label class="control-label" for="cout">Afin de</label>
+			<label class="control-label" for="cout">Coût</label>
 			<div class="controls">
-				<input id="id_cout" name="cout" placeholder="Cout de la tache" class="input-xlarge" required="" type="text">
+				<input id="id_cout" name="cout" placeholder="Coût de la tache" class="input-xlarge" required="" type="text">
 			</div>
 		</div>
 		
+
+		<div class="control-group">
+				<label class="control-label" for="tache">User Story associée</label>
+				<div class="controls">
+					<select class="form-control" id="us" name="us">
+						<option value="NULL" selected >Aucune</option>
+						<?php
+							$req = $conn->query('SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON BACKLOG.ID_USER_STORY = USER_STORY.ID WHERE BACKLOG.ID_PROJET = '.$id_projet);
+							if($req == FALSE){
+									echo '<option >Erreur</option>';
+							}else{
+								while($row = $req->fetch_assoc()){
+									echo '<option value='.$row['ID'].'>En tant que '.utf8_encode($row['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row['BUT']).' afin '.utf8_encode($row['BENEFICE']).'.</option>';
+								}
+							}
+						?>
+					</select>
+				</div>
+			</div>
 
 		<div class="control-group">
 			<label class="control-label" for="return"></label>
