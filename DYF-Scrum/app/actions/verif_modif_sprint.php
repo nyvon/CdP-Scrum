@@ -16,7 +16,6 @@
 			echo '<div class="alert alert-danger" role="alert">Impossible de modifier le sprint.</div>';
 		else
 
-			
 			echo '<legend>Inscription</legend>
 			<div class="alert alert-success" role="alert">Modification du sprint réussie.</div>';
 		?>
