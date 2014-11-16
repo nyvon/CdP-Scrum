@@ -1,0 +1,27 @@
+<?php $lien = "index.php?action=verif_ajout_spec&id_projet=".$id_projet."&id_us=".$id_us."&id_sprint=".$id_sprint;
+echo '<form class="form-horizontal" name="form_sprint" method="post" action='.$lien.'>';
+
+?>
+	<fieldset>
+				<legend>Créer une spec</legend>		
+		<div class="control-group">
+			<label class="control-label" for="description">Description</label>
+			<div class="controls">
+				<input type="text" id="description" name="description" placeholder="Description" class="input-xlarge" required="">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="spec">Specification</label>
+			<div class="controls">
+				<input type="text" id="spec" name="spec" placeholder="Specification" class="input-xlarge" required="">				
+			</div>
+		</div>	
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>

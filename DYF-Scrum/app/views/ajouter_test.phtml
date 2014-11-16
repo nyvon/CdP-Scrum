@@ -1,0 +1,54 @@
+<?php $lien = "index.php?action=verif_ajout_test&id_projet=".$id_projet."&id_sprint=".$id_sprint;
+echo '<form class="form-horizontal" name="form_sprint" method="post" action='.$lien.'>';
+
+?>
+	<fieldset>
+				<legend>Créer un test</legend>	
+			<div class="control-group">
+				<label class="control-label" for="type">Type de test </label>
+				<div class="controls">
+					<input type="text" name="type" placeholder="Type" class="input-xlarge" required="">
+					
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="description">Description</label>
+				<div class="controls">
+					<input type="text" id="description" name="description" placeholder="Description" class="input-xlarge" required="">
+					
+				</div>
+			</div>		
+			<div class="control-group">
+				<label class="control-label" for="spec">Specification</label>
+				<div class="controls">
+					<input type="text" id="spec" name="spec" placeholder="Specification" class="input-xlarge" required="">				
+				</div>
+			</div>	
+			<div class="control-group">
+				<label class="control-label" for="tache">Tache associee</label>
+				<div class="controls">
+					<select multiple class="form-control" id="tache" name="tache">
+						<option value=0 selected >Aucune</option>
+						<?php
+							$i = 1;
+							$req = $conn->query('SELECT TACHE.ID, TACHE.INTITULE FROM TACHE JOIN ASSOCIER ON ASSOCIER.ID_TACHE = TACHE.ID JOIN USER_STORY ON USER_STORY.ID = ASSOCIER.ID_USER_STORY JOIN CONTENIR ON CONTENIR.ID_USER_STORY = ASSOCIER.ID_USER_STORY WHERE CONTENIR.ID_SPRINT = '.$id_sprint);
+							//$req = $conn->query('SELECT ID,INTITULE FROM TACHE');
+							if($req == FALSE){
+									echo '<option >Erreur</option>';
+							}else{
+								while($row = $req->fetch_assoc()){
+									echo '<option value='.$row['ID'].'>'.$row['INTITULE'].'</option>';
+								}
+							}
+						?>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="return"></label>
+				<div class="controls">
+				<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
+				</div>
+			</div>
+	</fieldset>
+</form>
