@@ -9,13 +9,13 @@
 	if ( !empty($_POST['description']) AND !empty($_POST['spec']))
 	{
 		//pour l'instant j'ai mis l'etat a 1, a verifier
-		$req1 = $conn->query('INSERT INTO test (TYPE, DESCRIPTION, SPECIFICATION, ID_ETAT, ID_USER_STORY, ID_SPRINT) VALUES ("TEST_VALIDATION", "'.$description.'", "'.$spec.'", 1, "'.$id_us.'", "'.$id_sprint.'")');
+		$req1 = $conn->query('INSERT INTO test (TYPE, DESCRIPTION, SPECIFICATION, ID_ETAT, ID_USER_STORY, ID_SPRINT) VALUES ("Validation", "'.$description.'", "'.$spec.'", 1, "'.$id_us.'", "'.$id_sprint.'")');
 		
 		if( $req1 == FALSE)
 				echo '<div class="alert alert-danger" role="alert">Impossible dajouter la spec 1.</div>';
 		else
 			echo '<legend>Inscription</legend>
-					<div class="alert alert-success" role="alert">Ajout specification réussit.</div>';
+					<div class="alert alert-success" role="alert">Ajout specification rÃ©ussit.</div>';
 			?>
 				<script type="text/javascript">
 					var id_projet = <?php echo $id_projet; ?>;

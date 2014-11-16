@@ -8,12 +8,12 @@
 	
 	if ( !empty($_POST['description']) AND !empty($_POST['spec']))
 	{
-		$req = $conn->query('UPDATE TEST SET DESCRIPTION="'.$description.'", SPECIFICATION="'.$spec.'" WHERE ID_USER_STORY = '.$id_us);
+		$req = $conn->query('UPDATE TEST SET DESCRIPTION="'.$description.'", SPECIFICATION="'.$spec.'" WHERE TYPE = "Validation" ID_USER_STORY = '.$id_us);
 		if($req == FALSE)
 			echo '<div class="alert alert-danger" role="alert">Impossible de modifier la spec.'.$row['ID'].'</div>';
 		else
 			echo '<legend>Inscription</legend>
-						<div class="alert alert-success" role="alert">Modification specification réussit.</div>';
+						<div class="alert alert-success" role="alert">Modification specification rÃ©ussit.</div>';
 			?>
 				<script type="text/javascript">
 					var id_projet = <?php echo $id_projet; ?>;

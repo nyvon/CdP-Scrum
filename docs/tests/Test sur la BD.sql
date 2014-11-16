@@ -52,28 +52,6 @@ VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `CONCERNER`
---
-
--- CREATE TABLE `CONCERNER` (
---   `ID_TEST` int(11) NOT NULL,
---   `ID_USER_STORY` int(11) NOT NULL,
---   `ID_TACHE` int(11) DEFAULT NULL
--- ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Test sur la table
---
-
-INSERT INTO CONCERNER
-(ID_TEST,ID_USER_STORY,ID_TACHE)
-VALUES
-(1,1,1),
-(2,2,NULL);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `CONTENIR`
 --
 
@@ -131,12 +109,12 @@ VALUES
 -- Test sur la table
 --
 
-INSERT INTO ETAT
-(DESCRIPTION)
-VALUES
-('À FAIRE'),
-('EN COURS'),
-('FAIT');
+-- INSERT INTO ETAT
+-- (DESCRIPTION)
+-- VALUES
+-- ('À FAIRE'),
+-- ('EN COURS'),
+-- ('FAIT');
 
 
 -- --------------------------------------------------------
@@ -298,10 +276,10 @@ VALUES
 --
 
 INSERT INTO TEST
-(TYPE,DESCRIPTION,SPECIFICATION,ID_ETAT)
+(TYPE,DESCRIPTION,SPECIFICATION,ID_ETAT,ID_SPRINT,ID_USER_STORY,ID_TACHE)
 VALUES
-('Validation',"Test de validation sur la page de connexion",'-cliquer sur connexion \n- entrer les login \n-cliquer sur connexion \n -resultat attendu:état connecté',1),
-('Unitaire','Tester la méthode check()','Tester la méthode check() en lui donnant en paramètre des valeurs diverses',1);
+('Validation',"Test de validation sur la page de connexion",'-cliquer sur connexion \n- entrer les login \n-cliquer sur connexion \n -resultat attendu:état connecté',1,1,1,1),
+('Unitaire','Tester la méthode check()','Tester la méthode check() en lui donnant en paramètre des valeurs diverses',1,1,2,NULL);
 
 -- --------------------------------------------------------
 

@@ -3,12 +3,17 @@ echo '<form class="form-horizontal" name="form_sprint" method="post" action='.$l
 
 ?>
 	<fieldset>
-				<legend>Cr�er un test</legend>	
+				<legend>Créer un test</legend>	
 			<div class="control-group">
 				<label class="control-label" for="type">Type de test </label>
 				<div class="controls">
-					<input type="text" name="type" placeholder="Type" class="input-xlarge" required="">
-					
+
+					<?php 
+    				echo "<select name='type'>";
+          			echo '<option value = "Unitaire">Unitaire</option>';
+          			echo '<option value = "Intégration">Intégration</option>';
+      				echo "</select>"; 
+					?>					
 				</div>
 			</div>
 			<div class="control-group">
@@ -47,7 +52,7 @@ echo '<form class="form-horizontal" name="form_sprint" method="post" action='.$l
 			<div class="control-group">
 				<label class="control-label" for="return"></label>
 				<div class="controls">
-				<button type="submit" id="submit" name="submit" class="btn btn-success">Cr�er</button>			
+				<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
 				</div>
 			</div>
 	</fieldset>
