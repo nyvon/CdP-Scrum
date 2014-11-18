@@ -4,7 +4,7 @@
 
 
 	
-	 $query="SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG 
+	/* $query="SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG 
 	  ON BACKLOG.ID_USER_STORY = USER_STORY.ID JOIN PROJET 
 	  ON PROJET.ID = BACKLOG.ID_PROJET
 	   WHERE PROJET.ID =".$id_projet; 
@@ -19,9 +19,8 @@ $query2="SELECT user_story.TYPE_UTILISATEUR, user_story.BUT,user_story.BENEFICE 
 $query1 = " SELECT etat.DESCRIPTION FROM etat, user_story
             WHERE user_story.ID_ETAT = etat.ID";
 $desc =$conn->query($query1);
-$result2 =$conn->query($query2);
+$result2 =$conn->query($query2);*/
 
-$conn->close();
 
 ?>
 

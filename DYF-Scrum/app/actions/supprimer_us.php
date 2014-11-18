@@ -1,7 +1,7 @@
 <?php
 include "bd-connexion.php";
 	$id_projet = $_GET['id_projet'];
-	$id_sprint = $_POST['id_us'];
+	$id_us = $_POST['id_us'];
 	$query = "DELETE FROM USER_STORY WHERE ID = ".$id_us ;
 	$query2 = "DELETE FROM CONTENIR WHERE ID_USER_STORY = ".$id_us ;
 	$query1 = "DELETE FROM BACKLOG WHERE ID_USER_STORY = ".$id_us ;
@@ -12,13 +12,13 @@ include "bd-connexion.php";
 
 
 	if( $conn->query($query) == FALSE)
-		echo '<div class="alert alert-danger" role="alert">Impossible de supprimer le sprint.</div>';
+		echo '<div class="alert alert-danger" role="alert">Impossible de supprimer l\'US.</div>';
 	else
 		if( $conn->query($query1) == FALSE)
-			echo '<div class="alert alert-danger" role="alert">Impossible de supprimer le sprint.</div>';
+			echo '<div class="alert alert-danger" role="alert">Impossible de supprimer l\'US.</div>';
 		else{
 			echo '<legend>Suppression</legend>
-		<div class="alert alert-success" role="alert">Suppression du sprint réussie.</div>';
+		<div class="alert alert-success" role="alert">Suppression de l\'US rÃ©ussie.</div>';
 			$conn->query($query2);
 			$conn->query($query3);
 			$conn->query($query4);
