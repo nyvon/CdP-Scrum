@@ -11,13 +11,160 @@
   <li class="active">
    <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
    </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+  <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
 </ul>
  
 <h1>Backlog du projet</h1>
 
-<h2>User Story</h2>
 
+<?php 
+
+
+$result0 = $conn->query("SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON USER_STORY.ID = BACKLOG.ID_USER_STORY WHERE BACKLOG.ID_PROJET = ".$id_projet);
+if ($result0->num_rows > 0) {
+  $i = 1;
+  echo '<div class="accordion" id="accordion2">';
+  while($row0 = $result0->fetch_assoc()) {
+    if($i == 1){
+    /*echo '<div class="pull-right"> <a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
+ 
+          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Suppression de tache</h3>
+          </div>
+          <div class="modal-body">
+          <form name="input" action="index.php?action=supp_tache&id_projet='.$id_projet.'" method="post">
+          <p>Êtes-vous sûr de vouloir supprimer cette tâche?</p>
+          </div>
+          <div class="modal-footer">
+          <input type="hidden" name="id_tache" value="'.$row['ID'].'"/>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+          <input class="btn btn-primary" type="submit"></input>
+           </form>
+          </div>
+          </div></div></div>';*/
+    echo '<div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].'</div></div>
+      </a>
+    </div>
+    <div id="collapse'.$i.'" class="accordion-body collapse in">
+      <div class="accordion-inner">';}
+    else{
+      echo '<div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].' </div></div>      </a>
+    </div>
+    <div id="collapse'.$i.'" class="accordion-body collapse">
+      <div class="accordion-inner">';
+    }
+
+
+    $result = $conn->query("SELECT TACHE.* FROM TACHE JOIN ASSOCIER ON ASSOCIER.ID_TACHE = TACHE.ID WHERE ASSOCIER.ID_USER_STORY = ".$row0['ID']);
+
+
+    while($row = $result->fetch_assoc()) {
+         echo '<ul class="thumbnails">
+                <li class="span4">
+                  <div class="thumbnail" style="width: 160px; height: 160px;">
+
+                    <form name="input" action="index.php?action=modifier_tache&id_projet='.$id_projet.'" method="post">
+                                      <input type="hidden" name="id_tache" value="'.$row['ID'].'"/>
+<input type="image" src="'.Atomik::asset('assets/images/glyphicons/glyphicons_030_pencil.png').'" width="15" height="15" alt="Submit form"></input><div class="pull-right"><p>'.$row['COUT'].'</p></div>
+</form>
+
+                    <h5 style="text-align:center;">'.utf8_encode($row['INTITULE']).'</h5>
+                    <p style="text-align:center;">'.utf8_encode($row['DESCRIPTION']).'</p>';
+                    if($row['ID_ETAT'] == 1){
+                      echo '<p style="text-align:center;" class="text-warning">À faire</p>';
+                    }
+                    else if($row['ID_ETAT'] == 1){
+                      echo '<p style="text-align:center;" class="text-info">En cours</p>';
+                    }
+                    else
+                    {
+                      echo '<p style="text-align:center;" class="text-success">Terminée</p>';
+                    }
+
+                  echo '<div class="pull-right"><a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a></div>
+ 
+          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Suppression de tache</h3>
+          </div>
+          <div class="modal-body">
+          <form name="input" action="index.php?action=supp_tache&id_projet='.$id_projet.'" method="post">
+          <p>Êtes-vous sûr de vouloir supprimer cette tâche?</p>
+          </div>
+          <div class="modal-footer">
+          <input type="hidden" name="id_tache" value="'.$row['ID'].'"/>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+          <input class="btn btn-primary" type="submit"></input>
+           </form>
+          </div>
+          </div></div>
+                </li>
+              </ul>';
+    }
+    echo '<p style="text-align:center;" ><a href="index.php?action=form_tache&id_projet='.$id_projet.'&id_us='.$row0['ID'].'"><img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_190_circle_plus.png').'" class="img-circle"></a></p>';
+    echo '<a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
+ 
+          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Suppression de User Story</h3>
+          </div>
+          <div class="modal-body">
+          <form name="input" action="index.php?action=supprimer_us&id_projet='.$id_projet.'" method="post">
+          <p>Êtes-vous sûr de vouloir supprimer cette User Story?</p>
+          </div>
+          <div class="modal-footer">
+          <input type="hidden" name="id_us" value="'.$row0['ID'].'"/>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+          <input class="btn btn-primary" type="submit"></input>
+           </form>
+          </div>
+          </div>
+
+          <a href="#myModal2" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_030_pencil.png').'" width="15" height="15" alt="" href=#></a>
+ 
+          <div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Modification de User Story</h3>
+          </div>
+          <div class="modal-body">
+          <form name="input" action="index.php?action=modifier_us&id_projet='.$id_projet.'" method="post">
+          <p>Êtes-vous sûr de vouloir modifier cette User Story?</p>
+          </div>
+          <div class="modal-footer">
+          <input type="hidden" name="id_us" value="'.$row0['ID'].'"/>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+          <input class="btn btn-primary" type="submit"></input>
+           </form>
+          </div>
+          </div>
+    </div>
+    </div></div>';
+    $i = $i + 1;
+  }
+  echo '</div>';
+}
+?>
+
+
+
+<?php echo '<a class="btn btn-large btn-primary" href="index.php?action=form_us&id_projet='.$id_projet.'">Créer une User Story &raquo;</a>'; ?>
 	
-
-<?php echo '<p><a class="btn btn-large btn-primary" href="index.php?action=form_us&id_projet='.$id_projet.'">Créer une User Story &raquo;</a></p>'; ?>
-</div>

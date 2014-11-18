@@ -2,8 +2,6 @@
 include"bd-connexion.php"; 	
 	$id = $_SESSION['id'];     
 	$pseudo = $_SESSION['pseudo'];
-
-
 	
 	 $query="SELECT PROJET.ID, PROJET.NOM, PROJET.DESCRIPTION,PROJET.LIEN_GIT
 	  FROM PROJET JOIN PARTICIPER 

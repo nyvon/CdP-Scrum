@@ -1,27 +1,118 @@
+
 <ul class="nav nav-pills">
-  <li >
-     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
   </li>
-  <li >   
+  <li>   
     <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
   </li>
-   <li class="active">
+  <li>
+    <li class="active">
    <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
    </li>
-  <li>
+   <li>
    <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
-   </li>
+ </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+  <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
 </ul>
 
 <div class="container-fluid">
-    <div class="row-fluid">
 	  <div class="span6">
-		<h2>Sprints</h2>
-		<?php $query ="SELECT * FROM sprint"; ?>
-	  </div>
-	  <div class="span6">
-		<h2>User Story</h2>
-		<?php $query = "SELECT * FROM user_story" ?>
-	  </div>
+		<div class="btn-toolbar" style="margin: 0;">
+			<div class="btn-group">
+				<?php echo '<a class="btn btn-primary" href="index.php?action=ajouter_sprint&id_projet='.$id_projet.'">';?>
+					Ajouter sprint
+				</a>
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
+					Modifier sprint
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<?php
+						$qry = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+						$r = $conn->query($qry);
+						if ($r == FALSE)
+							echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+						else
+						{
+							$i=1;
+							while($rw2 = $r->fetch_assoc()) {
+								echo '<li ><a href="index.php?action=modifier_sprint&id_sprint='.$rw2["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$rw2["DATE_DEB"].' au '.$rw2["DATE_FIN"].'</a></li>';
+								$i++;
+							}
+						}
+					?>
+				</ul>
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+					Supprimer sprint
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<?php
+						$q = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+						$rep = $conn->query($q);
+						if ($rep == FALSE)
+							echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+						else
+						{
+							$i=1;
+							while($rw3 = $rep->fetch_assoc()) {
+								echo '<li><a href="index.php?action=supprimer_sprint&id_sprint='.$rw3["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$rw3["DATE_DEB"].' au '.$rw3["DATE_FIN"].'</a></li>';
+								$i++;
+							}
+						}
+					?>
+				</ul>
+			</div>
+			</div>
+		<h2>User Story par sprint</h2>
+		
+		<?php 
+		$query = "SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON USER_STORY.ID = BACKLOG.ID_USER_STORY WHERE BACKLOG.ID_PROJET = ".$id_projet;
+		$result = $conn->query($query);
+		if($result == FALSE)
+			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+		else
+		{
+			echo '<div class="panel panel-default">';
+			echo '<table class="table" align="center"><thead><tr><th>En tant que</th><th>Je souhaite </th><th>Afin de </th><th>Cout</th><th>Priorite</th><th>Associer</th></tr></thead><tbody>';
+			while($row = $result->fetch_assoc()) {
+				echo '<tr><td>'.utf8_encode($row["TYPE_UTILISATEUR"]).'</td>';
+				echo '<td>'.utf8_encode($row["BUT"]).'</td>';
+				echo '<td>'.utf8_encode($row["BENEFICE"]).'</td>';
+				echo '<td>'.utf8_encode($row["COUT"]).'</td>';
+				echo '<td>'.utf8_encode($row["PRIORITE"]).'</td>';
+				echo '<td><div class="btn-group"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
+				echo 'Choisir sprint<span class="caret"></span></button>';
+				echo '<ul class="dropdown-menu" role="menu">';
+				$query2 = "SELECT SPRINT.ID, SPRINT.DATE_DEB, SPRINT.DATE_FIN FROM SPRINT WHERE ID_PROJET = ".$id_projet;
+				$result2 = $conn->query($query2);
+				if ($result2 == FALSE)
+					echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+				else
+				{
+					$i=1;
+					while($row2 = $result2->fetch_assoc()) {
+						echo '<li><a href="index.php?action=ajout_user_story_sprint&id_sprint='.$row2["ID"].'&id_us='.$row["ID"].'&id_projet='.$id_projet.'"><b>Sprint '.$i.'</b> du '.$row2["DATE_DEB"].' au '.$row2["DATE_FIN"].'</a></li>';
+						$i++;
+					}
+				}
+				echo '</ul></td></tr>';
+			}
+			echo '</tbody></table></div>';
+		}
+		?>
 	</div>
 </div>

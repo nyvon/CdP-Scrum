@@ -1,6 +1,6 @@
 <ul class="nav nav-pills">
   <li >
-     <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
   </li>
   <li class="active">   
     <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
@@ -11,13 +11,22 @@
   <li>
    <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
    </li>
+    <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+  <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
 </ul>
 
     <h1>Gestion des collaborateurs du projet</h1>
     <legend>Collaborateurs du projet</legend>
 
-      <?
-      $id_projet = $_GET['id_projet'];
+     <?php
+	  $id_projet = $_GET['id_projet'];
       $result = $conn->query("SELECT UTILISATEUR.ID, UTILISATEUR.NOM NOM1, UTILISATEUR.PRENOM, UTILISATEUR.MAIL, UTILISATEUR.PSEUDO, ROLE.NOM NOM2 FROM UTILISATEUR JOIN PARTICIPER ON PARTICIPER.ID_UTILISATEUR = UTILISATEUR.ID JOIN ROLE ON ROLE.ID = PARTICIPER.ID_ROLE WHERE PARTICIPER.ID_PROJET = ".$id_projet);
       echo '<table class="table table-hover table-striped"><thead>';
       echo '<tr><th>Login</th><th>Prénom</th><th>Nom</th><th>Mail</th><th>Rôle</th></tr></thead><tbody>';
@@ -33,14 +42,14 @@
 
 <legend>Ajout de collaborateur au projet</legend>
 
-<?
+<?php
 echo '<form class="form-search" name="ajout-utilisateur" method="post" action="index.php?action=verif-ajoututilisateur&id_projet='.$id_projet.'" onSubmit="return verifFormulaire()">';
 ?>
 <fieldset>
 
     <p>Entrez le nom de l'utilisateur que vous souhaitez ajouter.</p>
     <input id="login" name="login" placeholder="Login de l'utilisateur" list="menuItems" class="input-xlarge" required="" type="text" autocomplete="off">
-    <?
+    <?php
   
   // Verification de la disponibilité du login
   $result = $conn->query("SELECT ID, PSEUDO, NOM, PRENOM FROM UTILISATEUR WHERE PSEUDO LIKE '".$_GET["pseudo"]."%' LIMIT 0,10 ");

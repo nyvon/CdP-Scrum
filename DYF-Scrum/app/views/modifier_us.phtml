@@ -1,0 +1,60 @@
+<?php 
+	$lien = "index.php?action=verif_modifier_us&id_projet=".$id_projet;
+	echo '<form class="form-horizontal" name="user_story" method="post" action='.$lien.'>';
+	$id_us = $_POST["id_us"];
+	$result = $conn->query("SELECT * FROM USER_STORY WHERE USER_STORY.ID = ".$id_us);
+  	$row = $result->fetch_assoc();
+
+
+?>
+	<fieldset>
+				<legend>Modifier une User Story</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_user">En tant que</label>
+			<div class="controls">
+			<?php echo '<input type="hidden" name="id_us" value="'.$row['ID'].'"/>'; ?>
+
+			<?php echo 	'<input id="id_type" name="type_user" placeholder="Utilisateur" value = "'.utf8_encode($row['TYPE_UTILISATEUR']).'" class="input-xlarge" required="" type="text">'; ?>
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="but">Je souhaite</label>
+			<div class="controls">
+			<?php	echo '<input id="id_but" name="but" placeholder="le but" value = "'.utf8_encode($row['BUT']).'" class="input-xlarge" required="" type="text">';?>
+			</div>
+		</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="benefice">Afin de</label>
+			<div class="controls">
+			<?php	echo '<input id="id_benef" name="benefice" value = "'.utf8_encode($row['BENEFICE']).'" class="input-xlarge" type="text">';?>
+				
+		</div>
+        </div>
+		<div class="control-group">
+			<label class="control-label" for="cout">Coût</label>
+			<div class="controls">
+			<?php	echo '<input id="id_coup" name="cout" placeholder="Le coût de cet US" value = "'.$row['COUT'].'" class="input-xlarge" required="" type="text">';?>
+				
+		</div>
+        </div>
+
+		<div class="control-group">
+			<label class="control-label" for="priorité">Priorité</label>
+			<div class="controls">
+			<?php	echo '<input id="id_prio" name="priorite" placeholder="priorite" value = "'.$row['PRIORITE'].'" class="input-xlarge" required="" type="text">';?>
+				
+		</div>
+         </div>	
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<a class="btn btn-inverse" href=<?php echo '"index.php?action=backlog&id_projet='.$id_projet.'"'; ?> >Retour</a>
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Modifier</button>
+		
+			</div>
+		</div>
+	</fieldset>
+</form>

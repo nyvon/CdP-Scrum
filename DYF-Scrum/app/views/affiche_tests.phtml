@@ -1,0 +1,188 @@
+<ul class="nav nav-pills">
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li>   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+  <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+   <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+ </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li class="active">
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+  <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
+</ul>
+
+<h1>Tests</h1>
+
+<?php 
+
+
+$result0 = $conn->query("SELECT * FROM SPRINT WHERE ID_PROJET = ".$id_projet." ORDER BY DATE_DEB");
+if ($result0->num_rows > 0) {
+  $i = 1;
+  echo '<div class="accordion" id="accordion2">';
+  while($row0 = $result0->fetch_assoc()) {
+    if($i == 1){
+    echo '<div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        Sprint #'.$i.'
+      </a>
+    </div>
+    <div id="collapse'.$i.'" class="accordion-body collapse in">
+      <div class="accordion-inner">';}
+    else{
+      echo '<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'"> Sprint #'.$i.' </a>
+				</div>
+				<div id="collapse'.$i.'" class="accordion-body collapse">
+					<div class="accordion-inner">';
+    }
+	echo '<td>';
+	echo '<h3>Tests de validation</h3>';
+    echo '<table class="table" align="center"><tbody>';	
+	
+		echo '<table class="table table-striped table-bordered table-hover" align="center"><thead><tr><th>Intitule de l\'User Story associee</th><th>Non réalisable</th><th>Réalisable</th><th>Réalisé</th></thead><tbody>';
+			$tests = $conn->query("SELECT * FROM USER_STORY JOIN CONTENIR ON CONTENIR.ID_USER_STORY = USER_STORY.ID WHERE CONTENIR.ID_SPRINT = ".$row0['ID']);
+			while($r = $tests->fetch_assoc()) {
+				// la on va ajouter un bouton qui permet d'ajouter la spécification du test
+				// la table CONCERNER se crée ici
+				// ainsi que la table test
+				if(!empty($r["BENEFICE"]))
+					echo '<tr><td>En tant que '.utf8_encode($r["TYPE_UTILISATEUR"]).', je souhaite '.utf8_encode($r["BUT"]).', afin '.utf8_encode($r["BENEFICE"]);
+				else
+					echo '<tr><td>En tant que '.utf8_encode($r["TYPE_UTILISATEUR"]).', je souhaite '.utf8_encode($r["BUT"]).'.';
+
+				echo '<div class="btn-toolbar" style="margin: 0;">';
+				$q = "SELECT * FROM TEST WHERE TYPE = 'Validation' AND ID_USER_STORY=".$r['ID'];
+				$result = $conn->query($q);
+				$rowtest= $result->fetch_assoc();
+				if ($result->num_rows == 0) {
+					
+					echo '<div class="btn-group">';
+						echo '<a class="btn btn-primary" href="index.php?action=ajouter_spec&id_projet='.$id_projet.'&id_us='.$r['ID'].'&id_sprint='.$row0['ID'].'">Ajouter Spec</a>';
+					echo '</div>';
+				}else{
+					echo '<div class="btn-group" data-toggle="modal" data-target="#myModal">';	
+						echo '<a class="btn btn-info btn-lg"  >Afficher Spec</span></a>';
+					echo '</div>';
+					
+					echo '<div class="btn-group">';
+						echo '<a class="btn btn-warning" href="index.php?action=modifier_spec&id_projet='.$id_projet.'&id_us='.$r['ID'].'">Modifier Spec</span>';
+					echo '</div>';
+					echo '<div class="btn-group">';	
+						echo '<a class="btn btn-danger"  href="index.php?action=supprimer_spec&id_projet='.$id_projet.'&id_us='.$r['ID'].'&id_sprint='.$row0['ID'].'">Supprimer Spec</span></a>';
+					echo '</div>';
+				}
+				echo '</div></td>';
+				//pour verifier que toutes les tâches concernant cet US ont été rélisées
+					$b = $conn->query("SELECT * FROM TACHE
+						JOIN ASSOCIER ON TACHE.ID=ASSOCIER.ID_TACHE 
+						JOIN USER_STORY ON USER_STORY.ID = ASSOCIER.ID_USER_STORY WHERE USER_STORY.ID = ".$r['ID']." AND TACHE.ID_ETAT != 3"); //revoir id_etat
+					$count2 = $b->num_rows;
+					if($result->num_rows == 0)
+						echo '<td></td>';
+					else if($count2>0){
+						echo '<td><div class="alert alert-warning" role="alert">Finir les taches associees</div></td></td><td></td><td></td>';
+					}
+					else {
+						
+						if($rowtest['ID_ETAT']!=3)
+							echo '<td>  </td><td><a class="btn btn-warning" href="index.php?action=valider&id_projet='.$id_projet.'&id_test='.$rowtest['ID'].'">Cliquez si test validé</a></td><td> </td>';
+						else
+							echo '<td>  </td><td></td><td><div class="alert alert-success" role="alert">Test Valide</div></td>';
+					
+				}
+				
+				
+				echo '</tr>';
+				?>
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<?php
+							echo '<h4 class="modal-title" id="myModalLabel">'.utf8_encode($rowtest['DESCRIPTION']).'</h4>';
+						  echo '</div>';
+						  echo '<div class="modal-body">';
+							echo '<h4>Specification: </h4>';
+							echo '<h5>'.utf8_encode($rowtest['SPECIFICATION']).'</h5>';
+						  echo '</div>'; ?>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<?php
+			}
+    echo '</table></tbody>';
+	echo '<h3> Autres tests </h3>';
+	echo '<div class="btn-group">';
+		echo '<a class="btn btn-primary" href="index.php?action=ajouter_test&id_projet='.$id_projet.'&id_sprint='.$row0['ID'].'">Ajouter un test</a>';
+	echo '</div>';
+		echo '<table class="table table-striped table-bordered table-hover" align="center"><thead><tr><th>Type de test</th><th>Réalisable</th><th>Réalisé</th></thead><tbody>';
+		$q1 = $conn->query("SELECT * FROM TEST WHERE ID_SPRINT = ".$row0['ID']." AND TYPE <> 'Validation'");
+		while($rw1= $q1->fetch_assoc()){
+			echo '<tr><td>'.utf8_decode($rw1['TYPE']).' ';
+			echo '<div class="btn-group" data-toggle="modal" data-target="#myModal2">';	
+						echo '<a class="btn btn-info btn-lg"  >Afficher Spec</span></a>';
+					echo '</div>';
+			echo '<div class="btn-group">';	
+				echo '<a class="btn btn-danger"  href="index.php?action=supprimer_test&id_projet='.$id_projet.'&id_test='.$rw1['ID'].'">X</span></a>';
+			echo '</div>';
+			echo '</td>';
+			if($rw1['ID_ETAT']<3)
+							echo '<td><a class="btn btn-warning" href="index.php?action=valider&id_projet='.$id_projet.'&id_test='.$rw1['ID'].'">Cliquez si test validé</a></td><td> </td>';
+						else
+							echo '<td></td><td><div class="alert alert-success" role="alert">Test Valide</div></td>';
+			echo '</tr>';
+		
+		?>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<?php
+				echo '<h4 class="modal-title" id="myModalLabel">'.utf8_encode($rw1['DESCRIPTION']).'</h4>';
+			  echo '</div>';
+			  echo '<div class="modal-body">';
+				echo '<h4>Specification: </h4>';
+				echo '<h5>'.utf8_encode($rw1['SPECIFICATION']).'</h5>';
+			  echo '</div>'; ?>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<?php
+		}
+		
+		echo '</table></tbody>';
+	echo '</table></div>
+    </div>
+    </div>';
+    $i = $i + 1;
+	
+  }
+  echo '</div>';
+  
+}
+?>
