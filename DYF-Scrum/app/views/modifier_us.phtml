@@ -1,7 +1,7 @@
 <?php 
 	$lien = "index.php?action=verif_modifier_us&id_projet=".$id_projet;
 	echo '<form class="form-horizontal" name="user_story" method="post" action='.$lien.'>';
-	$id_us = $_GET["id_us"];
+	$id_us = $_POST["id_us"];
 	$result = $conn->query("SELECT * FROM USER_STORY WHERE USER_STORY.ID = ".$id_us);
   	$row = $result->fetch_assoc();
 
@@ -14,21 +14,21 @@
 			<div class="controls">
 			<?php echo '<input type="hidden" name="id_us" value="'.$row['ID'].'"/>'; ?>
 
-			<?php echo 	'<input id="id_type" name="type_user" placeholder="Utilisateur" value = "'.$row['TYPE_UTILISATEUR'].'" class="input-xlarge" required="" type="text">'; ?>
+			<?php echo 	'<input id="id_type" name="type_user" placeholder="Utilisateur" value = "'.utf8_encode($row['TYPE_UTILISATEUR']).'" class="input-xlarge" required="" type="text">'; ?>
 				
 			</div>
 		</div>		
 		<div class="control-group">
 			<label class="control-label" for="but">Je souhaite</label>
 			<div class="controls">
-			<?php	echo '<input id="id_but" name="but" placeholder="le but" value = "'.$row['BUT'].'" class="input-xlarge" required="" type="text">';?>
+			<?php	echo '<input id="id_but" name="but" placeholder="le but" value = "'.utf8_encode($row['BUT']).'" class="input-xlarge" required="" type="text">';?>
 			</div>
 		</div>	
 
 		<div class="control-group">
 			<label class="control-label" for="benefice">Afin de</label>
 			<div class="controls">
-			<?php	echo '<input id="id_benef" name="benefice" value = "'.$row['BENEFICE'].'" class="input-xlarge" type="text">';?>
+			<?php	echo '<input id="id_benef" name="benefice" value = "'.utf8_encode($row['BENEFICE']).'" class="input-xlarge" type="text">';?>
 				
 		</div>
         </div>
@@ -51,14 +51,9 @@
 		<div class="control-group">
 			<label class="control-label" for="return"></label>
 			<div class="controls">
-			<button onclick="goBack()" class="btn btn-inverse">Retour</button>
+			<a class="btn btn-inverse" href=<?php echo '"index.php?action=backlog&id_projet='.$id_projet.'"'; ?> >Retour</a>
 			<button type="submit" id="submit" name="submit" class="btn btn-success">Modifier</button>
-
-<script>
-function goBack() {
-    window.history.back()
-}
-</script>			
+		
 			</div>
 		</div>
 	</fieldset>

@@ -27,6 +27,7 @@ include "bd-connexion.php";
 		<script type="text/javascript">
 		
 		var obj = 'window.location.replace("index.php");';
+
 		setTimeout(obj,2000);
 	</script>
 	<?php

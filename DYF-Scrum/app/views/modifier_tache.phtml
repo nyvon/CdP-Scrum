@@ -1,0 +1,45 @@
+<?php 
+	$lien = "index.php?action=verif_modifier_tache&id_projet=".$id_projet;
+	echo '<form class="form-horizontal" name="tache" method="post" action='.$lien.'>';
+	$id_tache = $_POST["id_tache"];
+	$result = $conn->query("SELECT * FROM TACHE WHERE TACHE.ID = ".$id_tache);
+  	$row = $result->fetch_assoc();
+
+
+?>
+	<fieldset>
+				<legend>Modifier une User Story</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_user">Intitule</label>
+			<div class="controls">
+			<?php echo '<input type="hidden" name="id_tache" value="'.$row['ID'].'"/>'; ?>
+
+			<?php echo 	'<input id="intitule" name="intitule" placeholder="Intitule" value = "'.utf8_encode($row['INTITULE']).'" class="input-xlarge" required="" type="text">'; ?>
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="but">Description</label>
+			<div class="controls">
+			<?php	echo '<input id="description" name="description" placeholder="Description" value = "'.utf8_encode($row['DESCRIPTION']).'" class="input-xlarge" required="" type="text">';?>
+			</div>
+		</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="benefice">Coût</label>
+			<div class="controls">
+			<?php	echo '<input id="cout" name="cout" value = "'.utf8_encode($row['COUT']).'" class="input-xlarge" type="text" required="">';?>
+				
+		</div>
+        </div>
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<a class="btn btn-inverse" href=<?php echo '"index.php?action=backlog&id_projet='.$id_projet.'"'; ?> >Retour</a>
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Modifier</button>
+		
+			</div>
+		</div>
+	</fieldset>
+</form>

@@ -1,0 +1,47 @@
+
+	<?php
+	if( $result == TRUE){
+		$num=mysqli_num_rows($result);
+	?>      
+ <div class="page-header"><h3>Liste de(s) USER STORIES  <small><?php echo "du Backlog";?></small></h3></div>
+		<div class="container">     
+    		<div class="row"> 
+    		<div class="col-xs-12 col-sm-10 col-md-6"> 
+       	    <table class="table table-bordered table-striped table-hover"> 
+               
+          <thead> 
+          <tr> 
+          <td>TYPE UTILISATEUR</td> 
+          <td>BUT</td> 
+          <td>BENEFICE </td> 
+          <td>COUT</td>
+          <td>PRIORITE</td>
+          <td>ETAT</td>
+          </tr> 
+          </thead> 
+		  
+		<?php
+		while(($row = $result->fetch_assoc())&&($row1 =$desc->fetch_assoc())){
+
+			?>
+			 <tbody> 
+          <tr class="success"> 
+          
+             
+          <td><?php echo $row['TYPE_UTILISATEUR']; ?></td>  
+          <td><?php echo $row['BUT']; ?></td> 
+          <td><?php echo $row['BENEFICE']; ?></td>
+          <td><?php echo $row['COUT']; ?></td>
+          <td><?php echo $row['PRIORITE']; ?></td>
+          <td><?php echo $row1['DESCRIPTION']; ?></td>
+          </tr>            	
+	     
+        <?php
+     }
+
+		}
+	else{
+		echo "There are any error(s) with this request"; 		
+	}	
+	
+?>
