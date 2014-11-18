@@ -11,18 +11,15 @@
   <li class="active">
    <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
    </li>
-    <li>
-   <?php echo '<a href="index.php?action=form_tache&id_projet='.$id_projet.'">Add Tache</a>' ?>
-   </li>
-   <li>
-   <?php echo '<a href="index.php?action=supprime_tache&id_projet='.$id_projet.'">Del Tache</a>' ?>
-   </li>
   <li>
    <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
  </li>
   <li>
    <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
  </li>
+  <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
 </ul>
  
 <h1>Backlog du projet</h1>
@@ -121,7 +118,7 @@ if ($result0->num_rows > 0) {
                 </li>
               </ul>';
     }
-    echo '<p style="text-align:center;" ><a href="index.php?action=form_tache&id_projet='.$id_projet.'"><img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_190_circle_plus.png').'" class="img-circle"></a></p>';
+    echo '<p style="text-align:center;" ><a href="index.php?action=form_tache&id_projet='.$id_projet.'&id_us='.$row0['ID'].'"><img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_190_circle_plus.png').'" class="img-circle"></a></p>';
     echo '<a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
  
           <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

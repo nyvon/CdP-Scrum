@@ -1,11 +1,11 @@
 <?php
 
 include "bd-connexion.php";
-	
+	$id_projet = $_GET["id_projet"];
 	$inti =$_POST["intitule"];
 	$descri = $_POST["desc"];
 	$cout = $_POST["cout"];
-	$id_us = $_POST["us"];
+	$id_us = $_POST["id_us"];
 	
 	if( !empty($_POST['intitule']) AND !empty($_POST['desc']) AND !empty($_POST['cout']))
 	{
@@ -25,8 +25,8 @@ include "bd-connexion.php";
 }
 	?>
 		<script type="text/javascript">
-		
-		var obj = 'window.location.replace("index.php");';
+		var id_projet = "<?php echo $id_projet; ?>";
+		var obj = 'window.location.replace("index.php?action=backlog&id_projet='+id_projet+'");';
 
 		setTimeout(obj,2000);
 	</script>

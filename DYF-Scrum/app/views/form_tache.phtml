@@ -1,4 +1,5 @@
 <?php   $id_projet = $_GET['id_projet'];
+		$id_us = $_GET['id_us'];
 ?>
 
 <ul class="nav nav-pills">
@@ -28,7 +29,7 @@
  </li>
 </ul>
 
-<form class="form-horizontal" name="user_story" method="post" action="index.php?action=ajout_tache">
+<form class="form-horizontal" name="user_story" method="post" action=<?php echo '"index.php?action=ajout_tache&id_projet='.$id_projet.'"'?>>
 	<fieldset>
 				<legend>Créer une tache</legend>		
 		<div class="control-group">
@@ -54,27 +55,9 @@
 		
 
 		<div class="control-group">
-				<label class="control-label" for="tache">User Story associée</label>
-				<div class="controls">
-					<select class="form-control" id="us" name="us">
-						<option value="NULL" selected >Aucune</option>
-						<?php
-							$req = $conn->query('SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON BACKLOG.ID_USER_STORY = USER_STORY.ID WHERE BACKLOG.ID_PROJET = '.$id_projet);
-							if($req == FALSE){
-									echo '<option >Erreur</option>';
-							}else{
-								while($row = $req->fetch_assoc()){
-									echo '<option value='.$row['ID'].'>En tant que '.utf8_encode($row['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row['BUT']).' afin '.utf8_encode($row['BENEFICE']).'.</option>';
-								}
-							}
-						?>
-					</select>
-				</div>
-			</div>
-
-		<div class="control-group">
 			<label class="control-label" for="return"></label>
 			<div class="controls">
+			<input id="id_us" name="id_us" value = <?php echo '"'.$id_us.'"';?>type="hidden">
 			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer la tache</button>			
 			</div>
 		</div>
