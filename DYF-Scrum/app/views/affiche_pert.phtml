@@ -1,0 +1,45 @@
+ <ul class="nav nav-pills">
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li>   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
+   <li class="active">
+    <?php echo '<a href="index.php?action=affiche_pert&id_projet='.$id_projet.'">PERT</a>' ?>
+  </li>
+</ul>
+
+<h1>PERT du Sprint actuel</h1>
+<!--ajouter le fait que ce soit seulement le PO qui puisse ajouter des dépendances -->
+<?php
+$date = date("Y-m-d");
+Print("Nous sommes le $date");
+$req1 = $conn->query('SELECT * FROM SPRINT WHERE ID_PROJET='.$id_projet.' AND DATE_DEB <="'.$date.'" AND DATE_FIN >="'.$date.'"');
+if( $req1->num_rows==0)
+	echo '<h2> Aucun sprint aujourd\'hui</h2>';
+else if( $req1->num_rows > 1)
+	echo '<h2>Attention, '.$req1->num_rows.' sprints sont en cours pour ce projet</h2>';
+else{
+	$row1 = $req1->fetch_assoc();
+?>
+
+<div class="btn-toolbar" style="margin: 0;">
+			<div class="btn-group">
+				<?php echo '<a class="btn btn-primary" href="index.php?action=dependances&id_projet='.$id_projet.'&id_sprint='.$row1['ID'].'">';?>
+					Gerer les dependances
+				</a>
+</div>
+<?php } ?>

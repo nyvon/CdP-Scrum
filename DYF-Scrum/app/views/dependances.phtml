@@ -1,0 +1,37 @@
+<?php
+$date = date("Y-m-d");
+$req = $conn->query('SELECT TACHE.ID, TACHE.INTITULE, TACHE.COUT FROM TACHE JOIN ASSOCIER ON TACHE.ID = ASSOCIER.ID_TACHE JOIN CONTENIR ON ASSOCIER.ID_USER_STORY = CONTENIR.ID_USER_STORY JOIN SPRINT ON CONTENIR.ID_SPRINT = SPRINT.ID WHERE SPRINT.ID_PROJET ='.$id_projet.' AND DATE_DEB <="'.$date.'" AND DATE_FIN >="'.$date.'"');
+if($req == FALSE)
+	echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+else
+{
+	echo '<div class="panel panel-default">';
+	echo '<table class="table" align="center"><thead><tr><th>intitule de la tache</th><th>Cout</th><th>Dependance</th></tr></thead><tbody>';
+	while($row = $req->fetch_assoc()) {
+		echo '<tr><td>'.utf8_encode($row["INTITULE"]).'</td>';
+		echo '<td>'.utf8_encode($row["COUT"]).'</td>';
+		echo '<td><div class="btn-group"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
+		echo 'Choisir Tache associee<span class="caret"></span></button>';
+		echo '<ul class="dropdown-menu" role="menu">';
+		$req1 = $conn->query('SELECT TACHE.ID, TACHE.INTITULE, TACHE.COUT FROM TACHE JOIN ASSOCIER ON TACHE.ID = ASSOCIER.ID_TACHE JOIN CONTENIR ON ASSOCIER.ID_USER_STORY = CONTENIR.ID_USER_STORY JOIN SPRINT ON CONTENIR.ID_SPRINT = SPRINT.ID WHERE ID_PROJET ='.$id_projet.' AND DATE_DEB <="'.$date.'" AND DATE_FIN >="'.$date.'" AND TACHE.ID <>'.$row['ID']);
+		if($req1 == FALSE)
+			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+		else
+		{
+			echo '<li><a href="index.php?action=ajout_modif_suppr_dependance&id_tache1='.$row["ID"].'&id_tache2='.$row["ID"].'&id_projet='.$id_projet.'"><b>Supprimer dependances</b></a></li>';
+			while($row2 = $req1->fetch_assoc()) {
+				echo '<li><a href="index.php?action=ajout_modif_suppr_dependance&id_tache1='.$row["ID"].'&id_tache2='.$row2["ID"].'&id_projet='.$id_projet.'"><b>'.$row2["INTITULE"].'</b></a></li>';
+			}
+		}
+		echo '</ul></td></tr>';
+	}
+	echo '</tbody></table></div>';
+}
+?>
+
+<div class="control-group">
+	<label class="control-label" for="return"></label>
+	<div class="controls">
+	<a class="btn btn-inverse" href=<?php echo '"index.php?action=affiche_pert&id_projet='.$id_projet.'"'; ?> >Retour</a>		
+	</div>
+</div>
