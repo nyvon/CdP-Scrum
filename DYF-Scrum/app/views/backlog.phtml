@@ -27,31 +27,12 @@
 
 <?php 
 
-
 $result0 = $conn->query("SELECT USER_STORY.* FROM USER_STORY JOIN BACKLOG ON USER_STORY.ID = BACKLOG.ID_USER_STORY WHERE BACKLOG.ID_PROJET = ".$id_projet);
 if ($result0->num_rows > 0) {
   $i = 1;
   echo '<div class="accordion" id="accordion2">';
   while($row0 = $result0->fetch_assoc()) {
     if($i == 1){
-    /*echo '<div class="pull-right"> <a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
- 
-          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="myModalLabel">Suppression de tache</h3>
-          </div>
-          <div class="modal-body">
-          <form name="input" action="index.php?action=supp_tache&id_projet='.$id_projet.'" method="post">
-          <p>Êtes-vous sûr de vouloir supprimer cette tâche?</p>
-          </div>
-          <div class="modal-footer">
-          <input type="hidden" name="id_tache" value="'.$row['ID'].'"/>
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-          <input class="btn btn-primary" type="submit"></input>
-           </form>
-          </div>
-          </div></div></div>';*/
     echo '<div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
@@ -73,10 +54,9 @@ if ($result0->num_rows > 0) {
 
     $result = $conn->query("SELECT TACHE.* FROM TACHE JOIN ASSOCIER ON ASSOCIER.ID_TACHE = TACHE.ID WHERE ASSOCIER.ID_USER_STORY = ".$row0['ID']);
 
-
+    echo '<ul class="thumbnails">';
     while($row = $result->fetch_assoc()) {
-         echo '<ul class="thumbnails">
-                <li class="span4">
+         echo '<li class="span2">
                   <div class="thumbnail" style="width: 160px; height: 160px;">
 
                     <form name="input" action="index.php?action=modifier_tache&id_projet='.$id_projet.'" method="post">
@@ -97,9 +77,9 @@ if ($result0->num_rows > 0) {
                       echo '<p style="text-align:center;" class="text-success">Terminée</p>';
                     }
 
-                  echo '<div class="pull-right"><a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a></div>
+                  echo '<div class="pull-right"><a href="#myModalTache'.$row['ID'].'" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a></div>
  
-          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div id="myModalTache'.$row['ID'].'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Suppression de tache</h3>
@@ -115,13 +95,13 @@ if ($result0->num_rows > 0) {
            </form>
           </div>
           </div></div>
-                </li>
-              </ul>';
+                </li>';
     }
+    echo '</ul>';
     echo '<p style="text-align:center;" ><a href="index.php?action=form_tache&id_projet='.$id_projet.'&id_us='.$row0['ID'].'"><img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_190_circle_plus.png').'" class="img-circle"></a></p>';
-    echo '<a href="#myModal" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
+    echo '<a href="#myModalUSsuppr'.$row0['ID'].'" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_016_bin.png').'" width="15" height="15" alt="" href=#></a>
  
-          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div id="myModalUSsuppr'.$row0['ID'].'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Suppression de User Story</h3>
@@ -138,9 +118,9 @@ if ($result0->num_rows > 0) {
           </div>
           </div>
 
-          <a href="#myModal2" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_030_pencil.png').'" width="15" height="15" alt="" href=#></a>
+          <a href="#myModalUSModif'.$row0['ID'].'" role="button" class="btn btn-link btn-mini" data-toggle="modal"> <img src="'.Atomik::asset('assets/images/glyphicons/glyphicons_030_pencil.png').'" width="15" height="15" alt="" href=#></a>
  
-          <div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div id="myModalUSModif'.$row0['ID'].'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 id="myModalLabel">Modification de User Story</h3>
@@ -167,4 +147,4 @@ if ($result0->num_rows > 0) {
 
 
 <?php echo '<a class="btn btn-large btn-primary" href="index.php?action=form_us&id_projet='.$id_projet.'">Créer une User Story &raquo;</a>'; ?>
-	
+  

@@ -1,4 +1,5 @@
 <?php
+
 include "bd-connexion.php";
 	$id_projet = $_GET['id_projet'];
 	$id_us = $_POST['id_us'];
@@ -6,8 +7,9 @@ include "bd-connexion.php";
 	$query2 = "DELETE FROM CONTENIR WHERE ID_USER_STORY = ".$id_us ;
 	$query1 = "DELETE FROM BACKLOG WHERE ID_USER_STORY = ".$id_us ;
 	$query3 = "DELETE FROM DEPENDANCE WHERE ID_USER_STORY = ".$id_us ;
-	$query4 = "DELETE FROM CONCERNER WHERE ID_USER_STORY = ".$id_us ;
+	$query4 = "SELECT ASSOCIER.ID_TACHE FROM ASSOCIER WHERE ID_USER_STORY = ".$id_us ;
 	$query5 = "DELETE FROM ASSOCIER WHERE ID_USER_STORY = ".$id_us ;
+	$query6 = "DELETE FROM TEST WHERE ID_USER_STORY = ".$id_us ;
 
 
 
@@ -21,8 +23,15 @@ include "bd-connexion.php";
 		<div class="alert alert-success" role="alert">Suppression de l\'US réussie.</div>';
 			$conn->query($query2);
 			$conn->query($query3);
-			$conn->query($query4);
+			$result = $conn->query($query4);
+			
 			$conn->query($query5);
+			$conn->query($query6);
+
+			while($row = $result->fetch_assoc()){
+				$conn->query("DELETE FROM TACHE WHERE ID = ".$row['ID_TACHE']);
+			}	
+
 	}
 	?>
 		<script type="text/javascript">

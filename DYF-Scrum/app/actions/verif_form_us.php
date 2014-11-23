@@ -10,11 +10,11 @@ include "bd-connexion.php";
     	if ( !empty($_POST['type_user']) AND !empty($_POST['but']))
 	{
 
-		$query = "INSERT INTO USER_STORY ( 	TYPE_UTILISATEUR, BUT, BENEFICE, COUT, PRIORITE, ID_ETAT) VALUES ('".utf8_decode($type)."','".utf8_decode($but)."','".utf8_decode($benef)."','".$cout."','".$prio."', 1)";
+		$query = 'INSERT INTO USER_STORY ( 	TYPE_UTILISATEUR, BUT, BENEFICE, COUT, PRIORITE, ID_ETAT) VALUES ("'.utf8_decode($type).'","'.utf8_decode($but).'","'.utf8_decode($benef).'","'.$cout.'","'.$prio.'", 1)';
 		if( $conn->query($query) == FALSE)
 			echo '<div class="alert alert-danger" role="alert">Error 331: Bad request.</div>';
 		else{	
-			$query2 = "SELECT ID FROM USER_STORY WHERE TYPE_UTILISATEUR = '".utf8_decode($type)."' AND BUT = '".utf8_decode($but)."' AND BENEFICE = '".utf8_decode($benef)."' AND COUT = ".$cout." AND PRIORITE = ".$prio." AND ID_ETAT = 1";
+			$query2 = 'SELECT ID FROM USER_STORY WHERE TYPE_UTILISATEUR = "'.utf8_decode($type).'" AND BUT = "'.utf8_decode($but).'" AND BENEFICE = "'.utf8_decode($benef).'" AND COUT = '.$cout.' AND PRIORITE = '.$prio.' AND ID_ETAT = 1';
 			$result = $conn->query($query2);
 			if($result->num_rows > 0){
 				$row = $result->fetch_assoc();
