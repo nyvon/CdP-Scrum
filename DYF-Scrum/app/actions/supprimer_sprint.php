@@ -11,7 +11,7 @@ include "bd-connexion.php";
 			echo '<div class="alert alert-danger" role="alert">Impossible de supprimer le sprint.</div>';
 		else
 			echo '<legend>Suppression</legend>
-		<div class="alert alert-success" role="alert">Suppression du sprint réussie.</div>';
+		<div class="alert alert-success" role="alert">Suppression du sprint rÃ©ussie.</div>';
 	?>
 		<script type="text/javascript">
 		 var id_projet = <?php echo $id_projet; ?>;

@@ -9,13 +9,13 @@ include "bd-connexion.php";
 	
 	if( !empty($_POST['intitule']) AND !empty($_POST['desc']) AND !empty($_POST['cout']))
 	{
-	$query = "INSERT INTO TACHE ( INTITULE, DESCRIPTION, COUT, ID_ETAT) VALUES ('".$inti."','".$descri."','".$cout."',1)";
+	$query = 'INSERT INTO TACHE ( INTITULE, DESCRIPTION, COUT, ID_ETAT) VALUES ("'.utf8_decode($inti).'","'.utf8_decode($descri).'","'.$cout.'",1)';
 	if( $conn->query($query) == FALSE)
 		echo '<div class="alert alert-danger" role="alert">Error : Echec creation de la tache .</div>';
 	else{
-		$req = $conn->query("SELECT ID FROM TACHE WHERE INTITULE ='".$inti."' AND DESCRIPTION ='".$descri."' AND COUT =".$cout);
+		$req = $conn->query('SELECT ID FROM TACHE WHERE INTITULE ="'.utf8_decode($inti).'" AND DESCRIPTION ="'.utf8_decode($descri).'" AND COUT ='.$cout);
 		$row = $req->fetch_assoc();
-		$req2 = $conn->query("INSERT INTO ASSOCIER (ID_USER_STORY, ID_TACHE) VALUES ('".$id_us."','".$row['ID']."')");
+		$req2 = $conn->query('INSERT INTO ASSOCIER (ID_USER_STORY, ID_TACHE) VALUES ("'.$id_us.'","'.$row['ID'].'")');
 		if($req2 != FALSE)
 			echo '<legend>Création tache</legend><div class="alert alert-success" role="alert">Tache créée avec succes</div>';
 		else
