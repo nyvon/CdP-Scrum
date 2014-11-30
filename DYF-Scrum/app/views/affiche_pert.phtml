@@ -22,6 +22,8 @@
   </li>
 </ul>
 
+    
+   
 <h1>PERT du Sprint actuel</h1>
 <!--ajouter le fait que ce soit seulement le PO qui puisse ajouter des dépendances -->
 <?php
@@ -41,5 +43,163 @@ else{
 				<?php echo '<a class="btn btn-primary" href="index.php?action=dependances&id_projet='.$id_projet.'&id_sprint='.$row1['ID'].'">';?>
 					Gerer les dependances
 				</a>
-</div>
-<?php } ?>
+</div><h4>
+<div id="myholder"></div>
+</h4>
+<script type="text/javascript">	
+	//On commence par créer le graphe, l'endroit ou sera affiché le rendu et la première case
+
+	
+	function initGraph(){
+		graph = new joint.dia.Graph;
+		tachesAffichees = new Object();
+		depNonAffichees = new Object();
+		tachesSansDep = new Array();
+		depNonAffichees.count = 0;
+		taches = new Object(); //Contiendra toutes les taches ainsi que leurs couts et intitulé
+		var paper = new joint.dia.Paper({
+			el: $('#myholder'),
+			width: 800,
+			height: 400,
+			model: graph,
+			gridSize: 1
+		});
+
+		rect = new joint.shapes.basic.Rect({
+			position : { x: 50, y: 150 },
+			size: { width: 100, height: 50 },
+			attrs: { rect: { fill: 'blue' }, text: { text: 'Debut Sprint \n Cout : 0', fill: 'white' } }
+		});
+		
+		graph.addCell(rect);
+	}
+	
+</script>
+
+<?php
+	$req2 = $conn->query('SELECT TACHE.ID, TACHE.INTITULE, TACHE.COUT FROM TACHE JOIN ASSOCIER ON TACHE.ID = ASSOCIER.ID_TACHE JOIN CONTENIR ON ASSOCIER.ID_USER_STORY = CONTENIR.ID_USER_STORY JOIN SPRINT ON CONTENIR.ID_SPRINT = SPRINT.ID WHERE SPRINT.ID_PROJET ='.$id_projet.' AND DATE_DEB <="'.$date.'" AND DATE_FIN >="'.$date.'"');
+	if($req2 == FALSE)
+		echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+	else{
+		?>
+		<script type="text/javascript">
+			initGraph();
+			k = 0;
+		</script>
+		<?php
+		while($tab1 = $req2->fetch_assoc()){
+		?>
+		<script type="text/javascript">
+			
+			//On place dans un objet tache les info concernant la tache puis on la place dans le tableau avec comme identifiant l'id de la tache
+			var tache = {"intitule" : "<?php echo $tab1['INTITULE']; ?>", "cout" : "<?php echo $tab1['COUT']; ?>"}
+			taches['<?php echo $tab1["ID"]; ?>'] = tache;
+			
+		</script>
+		<?php
+		$req3 = $conn->query('SELECT * FROM DEPENDANCE WHERE ID_TACHE ='.$tab1['ID']);
+		$req4 = $conn->query('SELECT * FROM DEPENDANCE WHERE ID_TACHE_DEPENDANT ='.$tab1['ID']);
+		if($req4 == FALSE)
+			echo '<div class="alert alert-danger" role="alert">Error 33: Bad request.</div>';
+		else{
+			
+			if($req4->num_rows == 0){
+				?>
+				<script type="text/javascript">
+					tachesSansDep.push(<?php echo $tab1["ID"]; ?>);
+				</script>
+				<?php	
+			}
+		//si on a pas de dépendance
+			if($req3->num_rows == 0){
+				?>
+				<script type="text/javascript">
+					var rect2 = graph.getCell(rect.id);
+					var rect3= rect2.clone();
+					rect3.translate(150, 70*k);
+					k++;
+					rect3.attr({text: { text: "<?php echo $tab1['INTITULE']; ?> \n Cout : <?php echo $tab1['COUT']; ?>", fill: 'white' } }); 
+					
+					var link = new joint.dia.Link({
+						source: { id: rect2.id },
+						target: { id: rect3.id }
+					});
+
+					graph.addCells([rect3, link]);
+					//On appele la fonction qui ajoute une case en passant l'intitulé de la tache et son cout
+					tachesAffichees['<?php echo $tab1["ID"]; ?>'] = rect3.id;
+												
+
+				</script>
+				<?php
+			}else{
+				while($tab3 = $req3->fetch_assoc()){
+					?>
+						<script type="text/javascript">
+							depNonAffichees['<?php echo $tab3["ID_TACHE_DEPENDANT"]; ?>'] = <?php echo $tab3["ID_TACHE"]; ?>;
+							depNonAffichees.count++;
+						</script>
+					<?php
+				}
+			}	
+			}
+		}
+		?>
+		
+		<script type="text/javascript">
+			//while(depNonAffichees.count > 0){
+			for(var p=0; p<20 ;p++){			//attention, ici pas bon
+				k = 0;
+				for(var i in tachesAffichees){
+					for(var j in depNonAffichees){
+						if(i == j){//si une des taches affichees a une dependance
+							var v = taches[depNonAffichees[j]];
+							var rect2 = graph.getCell(tachesAffichees[i]);
+							var rect3= rect2.clone();
+							var v = 50*k;
+							rect3.translate(150, v);
+							k++;
+							rect3.attr({text: { text: v.intitule, fill: 'white' } }); 
+							
+							var link = new joint.dia.Link({
+								source: { id: rect2.id },
+								target: { id: rect3.id }
+							});
+
+							graph.addCells([rect3, link]);
+							
+							tachesAffichees[depNonAffichees[j]] = rect3.id;
+							delete depNonAffichees[j];
+							depNonAffichees.count--;
+						}
+					}
+				}
+			}
+			
+			//On crée la derniere cellule et son premier lien
+			
+			var rect2 = graph.getCell(tachesAffichees[tachesSansDep[0]]);
+			rectFinal= rect.clone();
+			rectFinal.position(700, 150);
+			rectFinal.attr({text: { text: "Fin Sprint", fill: 'white' } }); 
+			
+			var link = new joint.dia.Link({
+				source: { id: rect2.id },
+				target: { id: rectFinal.id }
+			});
+			graph.addCells([rectFinal, link]);
+			
+			for( var i = 1 ; i <tachesSansDep.length; i++){
+				var rect4 = graph.getCell(tachesAffichees[tachesSansDep[i]])	;
+				var link = new joint.dia.Link({
+					source: { id: rect4.id },
+					target: { id: rectFinal.id }
+				});
+
+				graph.addCell(link);
+			}
+		</script>
+	<?php	
+	}
+}
+?>
