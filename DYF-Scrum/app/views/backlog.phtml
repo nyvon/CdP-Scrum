@@ -37,19 +37,30 @@ if ($result0->num_rows > 0) {
   while($row0 = $result0->fetch_assoc()) {
     if($i == 1){
     echo '<div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+    <div class="accordion-heading">';
+    if($row0['ID_ETAT'] == 3)
+    echo '<a class="accordion-toggle text-success" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
         <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].'</div></div>
-      </a>
-    </div>
+      </a>';
+    else
+      echo '<a class="accordion-toggle text-info" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].'</div></div>
+      </a>';
+    echo '</div>
     <div id="collapse'.$i.'" class="accordion-body collapse in">
       <div class="accordion-inner">';}
     else{
       echo '<div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
-        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].' </div></div>      </a>
-    </div>
+    <div class="accordion-heading">';
+    if($row0['ID_ETAT'] == 3)
+    echo '<a class="accordion-toggle text-success" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].'</div></div>
+      </a>';
+    else
+      echo '<a class="accordion-toggle text-info" data-toggle="collapse" data-parent="#accordion2" href="#collapse'.$i.'">
+        <div><div class="pull-left">US #'.$row0['ID'].' &nbsp;</div> En tant que '.utf8_encode($row0['TYPE_UTILISATEUR']).', je souhaite '.utf8_encode($row0['BUT']).' afin '.utf8_encode($row0['BENEFICE']).' <div class="pull-right">'.$row0['COUT'].' points | priorité : '.$row0['PRIORITE'].'</div></div>
+      </a>';
+    echo '</div>
     <div id="collapse'.$i.'" class="accordion-body collapse">
       <div class="accordion-inner">';
     }
@@ -72,7 +83,7 @@ if ($result0->num_rows > 0) {
                     if($row['ID_ETAT'] == 1){
                       echo '<p style="text-align:center;" class="text-warning">À faire</p>';
                     }
-                    else if($row['ID_ETAT'] == 1){
+                    else if($row['ID_ETAT'] == 2){
                       echo '<p style="text-align:center;" class="text-info">En cours</p>';
                     }
                     else

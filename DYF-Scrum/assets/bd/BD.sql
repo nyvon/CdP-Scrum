@@ -95,17 +95,6 @@ CREATE TABLE `KANBAN` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `LIER`
---
-
-CREATE TABLE `LIER` (
-  `ID_PROJET` int(11) NOT NULL,
-  `ID_SPRINT` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `PARTICIPER`
 --
 
@@ -263,12 +252,6 @@ ALTER TABLE `ETAT`
 --
 ALTER TABLE `KANBAN`
  ADD PRIMARY KEY (`ID_TACHE`,`ID_UTILISATEUR`);
-
---
--- Index pour la table `LIER`
---
-ALTER TABLE `LIER`
- ADD PRIMARY KEY (`ID_PROJET`,`ID_SPRINT`);
 
 --
 -- Index pour la table `PARTICIPER`
