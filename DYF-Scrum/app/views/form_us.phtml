@@ -21,7 +21,7 @@ echo '<form class="form-horizontal" name="user_story" method="post" action='.$li
 		<div class="control-group">
 			<label class="control-label" for="benefice">Afin de</label>
 			<div class="controls">
-				<input id="id_benef" name="benefice" placeholder="Benefice" class="input-xlarge" required="" type="text">
+				<input id="id_benef" name="benefice" placeholder="Benefice" class="input-xlarge" type="text">
 				
 		</div>
         </div>
@@ -44,6 +44,7 @@ echo '<form class="form-horizontal" name="user_story" method="post" action='.$li
 		<div class="control-group">
 			<label class="control-label" for="return"></label>
 			<div class="controls">
+			<a class="btn btn-inverse" href=<?php echo '"index.php?action=backlog&id_projet='.$id_projet.'"'; ?> >Retour</a>
 			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
 			</div>
 		</div>

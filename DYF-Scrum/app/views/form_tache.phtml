@@ -1,0 +1,65 @@
+<?php   $id_projet = $_GET['id_projet'];
+		$id_us = $_GET['id_us'];
+?>
+
+<ul class="nav nav-pills">
+  <li >
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li >   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+    <li class="active">
+   <?php echo '<a href="index.php?action=form_tache&id_projet='.$id_projet.'">Add Tache</a>' ?>
+   </li>
+   <li>
+   <?php echo '<a href="index.php?action=supprime_tache&id_projet='.$id_projet.'">Del Tache</a>' ?>
+   </li>
+    <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+ <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+</ul>
+
+<form class="form-horizontal" name="user_story" method="post" action=<?php echo '"index.php?action=ajout_tache&id_projet='.$id_projet.'"'?>>
+	<fieldset>
+				<legend>Créer une tache</legend>		
+		<div class="control-group">
+			<label class="control-label" for="type_tache">Intitulé</label>
+			<div class="controls">
+				<input id="id_tache" name="intitule" placeholder="intitulé" class="input-xlarge" required="" type="text">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="desc">Description</label>
+			<div class="controls">
+				<input id="id_desc" name="desc" placeholder="Description" class="input-xlarge" required="" type="text">				
+			</div>
+			</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="cout">Coût</label>
+			<div class="controls">
+				<input id="id_cout" name="cout" placeholder="Coût de la tache" class="input-xlarge" required="" type="text">
+			</div>
+		</div>
+		
+
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<input id="id_us" name="id_us" value = <?php echo '"'.$id_us.'"';?>type="hidden">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer la tache</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>

@@ -1,0 +1,81 @@
+ <ul class="nav nav-pills">
+  <li>
+    <?php echo '<a href="index.php?action=affiche_projet_num&id_projet='.$id_projet.'">Information</a>' ?>
+  </li>
+  <li>   
+    <?php echo '<a href="index.php?action=ajout-utilisateur&id_projet='.$id_projet.'">Collaborateurs</a>' ?>
+  </li>
+   <li>
+   <?php echo '<a href="index.php?action=sprints&id_projet='.$id_projet.'">Sprint</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=backlog&id_projet='.$id_projet.'">Backlog</a>' ?>
+   </li>
+  <li>
+   <?php echo '<a href="index.php?action=affiche_kanban&id_projet='.$id_projet.'">Kanban</a>' ?>
+ </li>
+   <li>
+   <?php echo '<a href="index.php?action=affiche_tests&id_projet='.$id_projet.'">Tests</a>' ?>
+ </li>
+ <li>
+    <?php echo '<a href="index.php?action=github&id_projet='.$id_projet.'">Github</a>' ?>
+  </li>
+   <li class="active">
+    <?php echo '<a href="index.php?action=burndown_chart&id_projet='.$id_projet.'">Burndown Chart</a>' ?>
+  </li>
+</ul>
+
+<h1>Burndown Chart</h1>
+
+<div id="chart">
+
+<?php 
+
+  $result = $conn->query("SELECT SUM(USER_STORY.COUT) FROM USER_STORY JOIN BACKLOG ON BACKLOG.ID_USER_STORY = USER_STORY.ID WHERE BACKLOG.ID_PROJET = ".$id_projet);
+  $row = $result->fetch_assoc();
+  $totalcout = $row["SUM(USER_STORY.COUT)"];
+
+  $result2 = $conn->query("SELECT COUNT(*) FROM SPRINT WHERE SPRINT.ID_PROJET = ".$id_projet);
+  $row2 = $result2->fetch_assoc();
+  $nbsprint = $row2["COUNT(*)"];
+
+
+include  "assets/libchart/libchart/classes/libchart.php";
+
+  $chart = new LineChart(1000, 500);
+  $serie1 = new XYDataSet();
+  $serie1->addPoint(new Point(0, $totalcout));
+  $query = "SELECT SPRINT.ID FROM SPRINT WHERE ID_PROJET = ".$id_projet." AND DATE_DEB <= NOW() ORDER BY SPRINT.DATE_DEB;";
+  $resultSprint = $conn->query($query);
+  $coutdeduit = $totalcout;
+  $serie2 = new XYDataSet();
+  $serie2->addPoint(new Point(0, $totalcout));
+  $numsprint = 1;
+  $nb_sprint = $resultSprint->num_rows;
+  while($row3 = $resultSprint->fetch_assoc()){
+    $resultCout = $conn->query("SELECT SUM(USER_STORY.COUT) FROM USER_STORY JOIN CONTENIR ON CONTENIR.ID_USER_STORY = USER_STORY.ID WHERE CONTENIR.ID_SPRINT = ".$row3["ID"]." AND USER_STORY.ID_ETAT = 3");
+    $row4 = $resultCout->fetch_assoc();
+    $coutdeduit = $coutdeduit - $row4["SUM(USER_STORY.COUT)"];
+    $serie2->addPoint(new Point($numsprint, $coutdeduit));
+    $serie1->addPoint(new Point($numsprint, ($totalcout - (($totalcout/$nb_sprint)*$numsprint))));
+    $numsprint = $numsprint + 1;
+  }
+
+
+$dataSet = new XYSeriesDataSet();
+  $chart->getPlot()->getPalette()->setLineColor(array(
+    new Color(127,255,0),
+    new Color(255, 0, 0)
+  ));
+  $dataSet->addSerie("Idéal", $serie1);
+  $dataSet->addSerie("Réel", $serie2);
+  $chart->setDataSet($dataSet);
+
+$chart->setTitle("Burndown Chart par Sprint");
+  $chart->render("assets/images/generated/demo1.png");
+
+?>
+
+<img src=<?php echo Atomik::asset("assets/images/generated/demo1.png"); ?>>
+
+</div>

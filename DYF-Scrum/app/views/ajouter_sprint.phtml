@@ -1,0 +1,27 @@
+<?php $lien = "index.php?action=verif_ajout_sprint&id_projet=".$id_projet;
+echo '<form class="form-horizontal" name="form_sprint" method="post" action='.$lien.'>';
+
+?>
+	<fieldset>
+				<legend>Créer un sprint</legend>		
+		<div class="control-group">
+			<label class="control-label" for="date_deb">Date début</label>
+			<div class="controls">
+				<input type="date" id="date_deb" name="date_deb" placeholder="Date début : aaaa-mm-jj" class="input-xlarge" required="">
+				
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label" for="date_fin">Date fin</label>
+			<div class="controls">
+				<input type="date" id="date_fin" name="date_fin" placeholder="Date de fin : aaaa-mm-jj" class="input-xlarge" required="">				
+			</div>
+		</div>	
+		<div class="control-group">
+			<label class="control-label" for="return"></label>
+			<div class="controls">
+			<button type="submit" id="submit" name="submit" class="btn btn-success">Créer</button>			
+			</div>
+		</div>
+	</fieldset>
+</form>

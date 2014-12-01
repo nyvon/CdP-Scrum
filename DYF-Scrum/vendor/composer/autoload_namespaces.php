@@ -6,7 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
+    'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
+    'Github\\' => array($vendorDir . '/knplabs/github-api/lib'),
     'DebugBar' => array($vendorDir . '/maximebf/debugbar/src'),
     'Atomik' => array($vendorDir . '/atomik/atomik/src'),
 );
